@@ -1,0 +1,16 @@
+.main_nav_img {
+			    max-height: 30px !important;
+				margin-top: -6px !important;
+				border-radius: 50%;
+				}
+				
+		.navbar-main-sm {
+			height: 44px !important;
+			min-height: 44px !important;
+			}
+			
+		.navbar-second-sm {
+			height: 40px !important;
+			min-height: 44px !important;
+			
+			}
