@@ -14,15 +14,13 @@ if(isset($_POST['sub'])){
     while($row=mysqli_fetch_assoc($result)) {
         $email=$row['email'];
         $password=$row['password'];
-
+$_SESSION['user_id'] = $row['id'];
     }
     if($email == $mail && $password == $pwd) {
 		
 		header('Location:usertable.php');
 		$_SESSION['e'] = $_POST['mail'];
-		 echo $_SESSION['e'];
-        echo $_POST['mail'];
-        $_SESSION['id'] = $row['id'];
+		
          
     }
  }

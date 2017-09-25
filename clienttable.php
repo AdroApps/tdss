@@ -6,7 +6,6 @@ session_set();
 //$id = $_SESSION['id'];
 $sql1 = "SELECT * FROM `clienttable` WHERE `email`='".$_SESSION['e']."' ";
 $data1 = mysqli_query($conn,$sql1);
-
 //client form
 
 if(isset($_POST['submit'])) {
@@ -14,16 +13,16 @@ if(isset($_POST['submit'])) {
 	$tan = $_POST['tan'];
 	$year = $_POST['year'];
 	$quarter = $_POST['quarter'];
-	$status = $_POST['status'];
+
 	$pname= $_POST['personname'];
 	$mail = $_POST['email'];
 	$number = $_POST['phonenumber'];
 	$service = $_POST['service'];
 	$date = date("Y/m/d");
 	//echo $sql;
-	$sql = "INSERT INTO `clienttable`(`organization` , `tan` , `year` , `quarter` , `status` ,
+	$sql = "INSERT INTO `clienttable`(`organization` , `tan` , `year` , `quarter` , 
 	  `pname` , `email` , `number` , `service` ,`date`) VALUES ('".$organization."' , '".$tan."' ,
-	   '".$year."' , '".$quarter."' , '".$status."' , '".$pname."' , '".$mail."' , '".$number."' ,
+	   '".$year."' , '".$quarter."' ,'".$pname."' , '".$mail."' , '".$number."' ,
 	    '".$service."' , '".$date."' )";
 	//$sql2 = "INSERT INTO `clienttable`(`organization` , `tan` , `year` , `quarter` , `status` , 
 	 //`pname` , `email` , `number` , `service` ,`date`) VALUES ('".$organization."' , '".$tan."' ,
@@ -135,7 +134,8 @@ $data2 = mysqli_query($conn , $sql2);
 			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
 				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
 				<li class="active"><a href="clienttable.php"><i class="icon-puzzle4 position-left"></i> TDS</a></li>
-				<li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li>
+				<!--li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
+				<li class=""><a href="addemployee.php"><i class="icon-puzzle4 position-left"></i> AddEmployee</a></li>
 			</ul>
 		</div>
 	</div>
@@ -255,14 +255,7 @@ $data2 = mysqli_query($conn , $sql2);
 					<option>Q3</option>
 					<option>Q4</option>
 				</select>
-			</div>
-			<div class="form-group">
-				<select  id="status" name="status" class="form-control">
-					<option>--------Status----------</option>
-					<option>Processing</option>
-					<option>Completed</option>
-				</select>
-			</div>
+			</div>			
 			<div class="form-group">
 				<input type="text" class="form-control" id="pname" name="personname" value="<?php echo $pname;?>" Placeholder="Enter Authorised Person Name">
 			</div>

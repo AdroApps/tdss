@@ -40,6 +40,7 @@ while($row = mysqli_fetch_assoc($data)) {
 	if(isset($_POST['name']))   {
 	$ename = $_POST['name'];
 	$pan = $_POST['number'];
+	$adhar = $_POST['number'];
 	//$month1 = $_POST['month1'];
 	$salary1 = $_POST['salary1'];
 	$tdsamount1 = $_POST['tdsamount1'];
@@ -53,7 +54,7 @@ while($row = mysqli_fetch_assoc($data)) {
 	//$quarter = $row['quarter'];
 	
 	
-	$sql1 = "INSERT INTO `employeetable`(`employeename` , `pan` , `month1` , `salary1` , `tdsamount1` , `month2` , `salary2` , `tdsamount2` ,`month3` , `salary3` , `tdsamount3`, `organization`, `quarter`) VALUES ('".$ename."' , '".$pan."' , '".$month1."' , '".$salary1."' , '".$tdsamount1."' , '".$month2."' , '".$salary2."' , '".$tdsamount2."' , '".$month3."' , '".$salary3."' , '".$tdsamount3."', '".$organization."', '".$quarter."')";  
+	$sql1 = "INSERT INTO `employeetable`(`employeename` , `pan` , `adhar` , `month1` , `salary1` , `tdsamount1` , `month2` , `salary2` , `tdsamount2` ,`month3` , `salary3` , `tdsamount3`, `organization`, `quarter`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."' , '".$month1."' , '".$salary1."' , '".$tdsamount1."' , '".$month2."' , '".$salary2."' , '".$tdsamount2."' , '".$month3."' , '".$salary3."' , '".$tdsamount3."', '".$organization."', '".$quarter."')";  
 	//$sql1 = "INSERT INTO `employeetable`(`employeename` , `pan` , `month1` , `salary1` , `tdsamount1` , `month2` , `salary2` , `tdsamount2` ,`month3` , `salary3` , `tdsamount3`, `organization`, `quarter`) VALUES ('".$ename."' , '".$pan."' , '".$month1."' , '".$salary1."' , '".$tdsamount1."' , '".$month2."' , '".$salary2."' , '".$tdsamount2."' , '".$month3."' , '".$salary3."' , '".$tdsamount3."', '".$organization."', '".$quarter."')";  
 	
 	$data1 = mysqli_query($conn,$sql1);
@@ -69,7 +70,14 @@ while($row = mysqli_fetch_assoc($data)) {
 		echo 'not moved'.mysqli_error($conn);
 	}
   }
-  
+ 
+/*$sql2="SELECT pan FROM addemployee"; 
+$result=mysqli_query($conn,$sql2);
+ 
+echo $sql2;
+if($result === FALSE) {
+die(mysqli_error());  
+}*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -168,8 +176,20 @@ while($row = mysqli_fetch_assoc($data)) {
 			<div class="form-group">
 				<input type="text" class="form-control" id="name" name="name" Placeholder="Enter Employee FullName">
 			</div>
+			
 			<div class="form-group">
 				<input type="text" class ="form-control" id="pan" name="number" Placeholder="Enter Pan Number">
+			</div>
+			<!--?php
+				echo "<select name='pan'>";
+					while ($row = mysql_fetch_array($result)) {
+					 
+					echo "<option value='" . $row['pan'] ."'>" . $row['pan']."</option>";
+					}
+					echo "</select>";
+					?-->
+			<div class="form-group">
+				<input type="text" class ="form-control" id="Adhar" name="number" Placeholder="Enter Adhar Number">
 			</div>
 			<div class="form-group">
 				<input type="text" class ="form-control" id="org" name="organization"  value=<?php echo "$organization"; ?>>

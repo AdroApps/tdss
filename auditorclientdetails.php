@@ -59,11 +59,11 @@ while($row = mysqli_fetch_array($data2)) {
 ?>
 <?php
 include_once "conn.php";
-$sql4 = "SELECT * FROM `fileuploads` ";
+$sql4 = "SELECT * FROM `fileuploads`  WHERE userid=".$id." ORDER BY date DESC";
 $data4 = mysqli_query($conn, $sql4);
 			
 if(isset($_POST['filesubmit'])) {
-	$date = date("Y/m/d");
+	$date = date("Y/m/d h:i:s" );
 
     //$email = $_POST['email'];
     if(!empty($_FILES['file_url']['name'])) {
@@ -77,19 +77,17 @@ if(isset($_POST['filesubmit'])) {
 		//$created = $time;
 		if ($_FILES['file_url']['error'] !== UPLOAD_ERR_OK) {
 			die("upload failedwith error code" . $_FILES['file_url']['error']);
-			echo "error";
+			$txt= "error";
 		}
 		if (move_uploaded_file($fileTmpLoc, $store)) {
-			$path = "http://localhost:8080/tds/fileuploads/$filename";
-			echo $path;
-			echo "farheen";
-			$sql3 = "INSERT into `fileuploads`(`file` , `date`) VALUES ('".$path."' , '".$date."')";
+			$sql3 = "INSERT into `fileuploads`(`file` , `date`,`userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
+
 			$data3 = mysqli_query($conn, $sql3);
 			if($data3) {
-				echo "success";
+				$txt= "success";
 			}
 			else {
-				 echo "not".mysqli_error($conn);
+				 $txt= "not".mysqli_error($conn);
 			 }
 		}
 	} else {
@@ -142,7 +140,8 @@ $data2 = mysqli_query($conn , $sql2);
 	 ?>
 </head>
 <body class="navbar-top-sm-xs">
-
+<input type="hidden" id="recid" value="<?php echo $_GET['clientdetails'];?>"/>
+<input type="hidden" id="userid" value="<?php echo $_SESSION['user_id'];?>"/>
 <!--Top navbars position-->
 <div class="navbar-fixed-top">
 <!-- Main navbar -->
@@ -183,6 +182,8 @@ $data2 = mysqli_query($conn , $sql2);
 
 		<div class="navbar-collapse collapse" id="navbar-second-toggle">
 			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
+			
+					<li class=""><a href="auditorclienttable.php?organization=<?php echo $_SESSION['org'];?>"><i class="icon-arrow-left8 position-left"></i>Back</a></li>
 				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
 				<li class="active"><a href=""><i class="icon-puzzle4 position-left"></i> TDS</a></li>
 				<!--li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
@@ -218,7 +219,22 @@ $data2 = mysqli_query($conn , $sql2);
 								<td><?php echo "$tan";?></td>
 								<td><?php echo "$year";?></td>
 								<td><?php echo "$quarter";?></td>
-								<td><?php echo "$status";?></td>
+								<td><?php // echo "$status";?>
+
+								<div class="form-group">
+				<select  id="status" name="status" class="form-control statuschange">
+				        <option <?php echo ($status == '') ? "selected='selected'" : ''; ?>>Select Status</option>
+						<option <?php echo (trim($status) == 'Completed') ? "selected='selected'": ''; ?>>Completed</option>
+						<option <?php echo (trim($status) == 'Processing') ? "selected='selected'": ''; ?>">Processing</option>
+						
+                     
+
+				</select>
+			</div>
+								
+								
+								
+								</td>
 								<td><?php echo "$pname";?></td>
 								<td><?php echo "$mail";?></td>
 								<td><?php echo "$number";?></td>
@@ -259,8 +275,8 @@ $data2 = mysqli_query($conn , $sql2);
 				</div>
 		</div>
 	<!-----Quarter Table---->
-	<!--employee table header-->
-		<center><a href="auditornewemployee.php?clientdetails=<?php echo $id; ?>" class="btn btn-sm btn-default">New</a></center>
+	<!--employee table header>
+		<center><a href="auditornewemployee.php?clientdetails=</center>?php echo $id; ?>" class="btn btn-sm btn-default">New</a></center-->
 	<!--/employee table header-->		
 		<!--Employee table-->
 	<div class="col-lg-12">
@@ -332,9 +348,9 @@ $data2 = mysqli_query($conn , $sql2);
 
 <!-----Attach file form---->
 <form action="" method="post" enctype="multipart/form-data">
-			<center><div style="position:relative">
+			<center><div>
                             <a class="btn btn-sm btn-default" href="javascript:;" style="margin-bottom:30px">
-                                <input type="file" name="file_url">
+                                <input type="file" name="file_url" multiple>
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
                             <input type="submit"  class="btn btn-sm btn-default" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
@@ -351,18 +367,39 @@ $data2 = mysqli_query($conn , $sql2);
 		<table class="table table-hover table-condensed">
 				<thead>
 					<tr>
-						<th>File</th>
+						<th>Name</th>
+						<th>View</th>
+						<th>Download</th>					
 						<th>Date</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php
+				 $currentPath = $_SERVER['PHP_SELF']; 
+
+					// output: Array ( [dirname] => /myproject [basename] => index.php [extension] => php [filename] => index ) 
+					$pathInfo = pathinfo($currentPath); 
+
+					// output: localhost
+					$hostName = $_SERVER['HTTP_HOST']; 
+
+					// output: http://
+					$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'?'https':'http';
+
+					// return: http://localhost/myproject/
+				   $url=$protocol.'://'.$hostName.$pathInfo['dirname']."/fileuploads/";
+
 				while($roww = mysqli_fetch_array($data4)){
 					
+					?>
 					
-					echo "<tr>
-					<td><a href=''>".$roww[1]."</a></td>";
-					echo
+					<tr>
+					<td><?php echo $roww[1]?></td>
+					
+					<td><a href="<?php echo $url.$roww[1];?>" target="_blank">View</a></td>
+					
+					<td><a href="<?php echo $url.$roww[1];?>" download>Download</a></td>
+					<?php echo
 					"<td>".$roww[2]."</td>";
 					
 					"</tr>";
@@ -376,6 +413,34 @@ $data2 = mysqli_query($conn , $sql2);
 </div>
 </div>
 <!-----/Attach File Table--->
+<script>
+$(document).ready(function() {
 
+    // Monitor your selects for change by classname
+    $('.statuschange').on('change', function() { 
+
+         // Save the place increment and value of the select
+              var value = $(this).val();
+
+	         var userid= $("#userid").val();
+             var recid = $("#recid").val();
+
+         // Send this data to a script somewhere via AJAX
+         $.ajax({
+             method: "POST",
+             url: "api/statuschange.php",
+             data: { 
+               userid:userid,
+			   recid:recid,
+               value: value
+             }
+          })
+          .done(function( msg ) {
+              alert( "Data Saved");
+			  location.reload();
+          });
+    });
+});
+</script>
 </body>
 </html>

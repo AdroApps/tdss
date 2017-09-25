@@ -9,7 +9,7 @@ define ('DB_PASSWORD' , '');
 
 define ('DB_NAME' , 'tds');
 
-
+ ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED); 
 $conn = mysqli_connect(DB_HOST, DB_UNAME, DB_PASSWORD, DB_NAME);
 
 function session_set()
