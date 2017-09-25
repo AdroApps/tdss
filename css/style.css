@@ -1,0 +1,12 @@
+.btn.btn-xs.btn-default{
+	margin-left: 95%;
+    margin-bottom: 8px;
+    background-color: white;
+ }
+.btn.btn-sm.btn-default{
+	background-color: white;
+	color:black;
+ }
+.navbar-default .navbar-nav > .active > a:after{
+		margin-bottom : 6px;
+}
