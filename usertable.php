@@ -6,7 +6,7 @@ $sql2 = "SELECT * FROM `usercreate` WHERE `userid` = '".$_SESSION['user_id']."' 
 
 $data1 = mysqli_query($conn , $sql2);
 
-/*
+
 if(isset($_POST['organization']))
 {
 	$organization  = $_POST['organization'];
@@ -23,7 +23,6 @@ if(isset($_POST['organization']))
 	
 	$sql = "INSERT INTO `usercreate` ( `organization` , `email` , `password` , `pname` , `number` , `tan` , `city` , `area` , `service` , `username`,`userid`) VALUES ('".$organization."' , '".$mail."' , '".$password."' , '".$pname."' , '".$number."' , '".$tan."' , '".$city."' , '".$area."' , '".$service."' , '".$username."', '".$userid."')";
 	$data = mysqli_query($conn,$sql);
-	echo $sql;
 	if($data)
 	{
 		$txt =  'moved database';
@@ -31,7 +30,7 @@ if(isset($_POST['organization']))
 	else{
 		$txt =  'not moved'.mysqli_error($conn);
 	}
-}*/
+}
 ?>
 
 
@@ -111,41 +110,36 @@ if(isset($_POST['organization']))
 
 				//echo"<tr>
 				//<td>".$row[0]."</td>";
-				echo"<tr>
-				<td><a href='auditorclienttable.php?organization=$row[1]'>".$row[1]."</a></td>";
+				echo "<tr id=".$row[0].">
+				<td class='edit-orgname'><a href='auditorclienttable.php?organization=$row[1]'>".$row[1]."</a></td>";
 				echo
-				"<td>".$row[2]."</td>";
+				"<td class='edit-mail'>".$row[2]."</td>";
 				echo
-				"<td>".$row[3]."</td>";
+				"<td class='edit-password'>".$row[3]."</td>";
 				echo
-				"<td>".$row[4]."</td>";
+				"<td class='edit-pname'>".$row[4]."</td>";
 				echo
-				"<td>".$row[5]."</td>";
+				"<td class='edit-number'>".$row[5]."</td>";
 				echo
-				"<td>".$row[6]."</td>";
+				"<td class='edit-tan'>".$row[6]."</td>";
 				echo
-				"<td>".$row[7]."</td>";
+				"<td class='edit-city'>".$row[7]."</td>";
 				echo
-				"<td>".$row[8]."</td>";
+				"<td class='edit-area'>".$row[8]."</td>";
 				echo
-				"<td>".$row[9]."</td>";
+				"<td class='edit-service'>".$row[9]."</td>";
 				
 				echo"
-				<td><class='text-center'>
-							<ul class='icons-list'>
-								<li class='dropdown'>
-									  <a href='#' class='dropdown-toggle' data-toggle='dropdown' >
-										
-										  <span class='glyphicon glyphicon-collapse-down'></span>
-										</a>
-									
-									<ul class='dropdown-menu dropdown-menu-right' >
-											<li><a href='edit.php?edit=$row[0]'> Edit</a></li>
-											<li><a href='delete.php?delete=$row[0]'>Delete</a></li>
-									</ul>
-								</li>
-							</ul>
-					 </td>
+				<td>
+						<a  data-toggle='modal' data-target='#myUserModal' class='edit_User btn btn-xs btnbg'>
+							<span class='glyphicon glyphicon-edit'></span>
+						</a>
+					</td>
+					<td>
+						<a id='$row[0]' class='btn btn-xs btnbg remove-item'>
+							<span class='glyphicon glyphicon-trash'></span>
+						</a>
+					</td>
 				
 				</tr>";
 			}
@@ -155,4 +149,130 @@ if(isset($_POST['organization']))
 	</table>
 </div>
 </div>
+
+<!----EDIT MODAL--->
+
+<!-- Modal -->
+<div id="myUserModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">EDIT ENTRY</h4>
+      </div>
+      <div class="modal-body">
+        <form action ="" method="POST">
+		<input type="hidden" id="edit-id"/>
+						<div class="form-group">
+						<input type = "text" class="form-control" id ="edit-orgname" name="organization" placeholder = "Enter Organization Name">
+						</div>
+						<div class="form-group">
+						<input type = "email" class="form-control" id ="edit-mail" name="mail" placeholder = "Enter Email">
+						</div>
+						<div class="form-group">
+						<input type = "password" class="form-control" id ="edit-password" name="password" placeholder = "Enter Password">
+						</div>
+						<div class="form-group">
+						<input type="text" class="form-control" id="edit-pname" name="personname" Placeholder="Enter Authorised Person Name">
+					    </div>
+						<div class="form-group">
+						<input type = "number" class="form-control" id ="edit-number" name="phonenumber" placeholder = "Enter Phonenumber">
+						</div>
+						<div class="form-group">
+						<input type="text" class ="form-control" id="edit-tan" name="tan" Placeholder="Enter Tan">
+						</div>
+						<div class="form-group">
+						<input type="text" class ="form-control" id="edit-city" name="city" Placeholder="Enter City">
+						</div>
+						<div class="form-group">
+						<input type="text" class ="form-control" id="edit-area" name="area" Placeholder="Enter Area">
+						</div>
+						<div class="form-group">
+						<input type="text" class="form-control" id="edit-service" name="service" Placeholder="Enter Service Charges">
+					    </div>
+						<input type="button" name="submit" value="submit" id="edit-submit" class="btn btn-md btn-success btnbg">
+						<input type="button" class="btn btn-md btn-default btnbg" name="cancel" value="Cancel" data-dismiss="modal">
+            
+					</form>
+</div>
+</div>
+	<!--/modal content-->
+</div>
+</div>
+<!---modal-->
+
+
+<script>
+
+$("body").on("click","#edit-submit",function(){
+		var id=$('#edit-id').val();
+		var orgname=$('#edit-orgname').val();
+       var mail= $('#edit-mail').val();
+		 var password=$('#edit-password').val();
+        var pname=$('#edit-pname').val();
+        var number=$('#edit-number').val();
+        var tan=$('#edit-tan').val();
+        var city=$('#edit-city').val();
+		var area=$('#edit-area').val();
+		var service=$('#edit-service').val();
+
+		$.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'edit.php',
+        data:{id:id,orgname:orgname,mail:mail,password:password,pname:pname,number:number,tan:tan ,city:city,area:area,service:service}
+    }).done(function(data){       
+        alert('Record Updated Successfully.');
+		$('#myUserModal').modal('hide');
+		location.reload();
+       
+    });
+	
+});
+ $("body").on("click",".edit_User",function(){
+       $tr = $(this).closest('tr');
+	   var id=$tr.attr('id');
+	   var orgname =  $('.edit-orgname', $tr).text();
+	   var mail = $('.edit-mail' , $tr).text();
+	   var password =  $('.edit-password', $tr).text();
+	   var pname = $('.edit-pname' , $tr).text();
+	   var number =  $('.edit-number', $tr).text();
+	   var tan = $('.edit-tan' , $tr).text();
+	   var city =  $('.edit-city', $tr).text();
+	   var area =  $('.edit-area', $tr).text();
+	   var service =  $('.edit-service', $tr).text();
+
+		$('#edit-id').val(id);
+        $('#edit-orgname').val(orgname);
+        $('#edit-mail').val(mail);
+		 $('#edit-password').val(password);
+        $('#edit-pname').val(pname);
+		 $('#edit-number').val(number);
+        $('#edit-tan').val(tan);
+		 $('#edit-city').val(city);
+        $('#edit-area').val(area);
+        $('#edit-service').val(service);
+	  });
+$("body").on("click",".remove-item",function(){
+    var id = $(this).attr('id');
+    var c_obj = $(this).parent().parent();
+	console.log(c_obj);
+   var r = confirm("Are you sure you want to delete this?");
+    if (r == true) {
+    $.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'udelete.php',
+        data:{id:id}
+    }).done(function(data){
+        c_obj.remove();
+        alert('Record Deleted Successfully.');
+       
+    });
+ }
+
+});
+</script>
 

@@ -1,5 +1,6 @@
 <?php
 include_once "conn.php";
+include_once "header.php";
 //session_set();
 $id = $_GET['clientdetails'];
 $quarter ="";
@@ -26,8 +27,7 @@ $tdsamount1tot = "";
 $tdsamount2tot = "";
 $tdsamount3tot = "";
 
-$sql1 = "SELECT * FROM `employeetable` WHERE `quarter` = '".$quarter."' AND`organization` = '".$organization."'  ";
-
+$sql1 = "SELECT * FROM `employeetable` WHERE `qid` = '".$id."' AND `userid` = '".$_SESSION['user_id']."' ";
 $data1= mysqli_query($conn,$sql1);
 $data2= mysqli_query($conn,$sql1);
 
@@ -110,95 +110,12 @@ $data2 = mysqli_query($conn , $sql2);
 }
 
 	?>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>Auditor Client Details</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel = "stylesheet" href="css/style.css">
-	
-	 <style>
-	 .main_nav_img {
-			    max-height: 30px !important;
-				margin-top: -6px !important;
-				border-radius: 50%;
-				}
-				
-		.navbar-main-sm {
-			height: 44px !important;
-			min-height: 44px !important;
-			}
-			
-		.navbar-second-sm {
-			height: 40px !important;
-			min-height: 44px !important;
-			
-			}
-	 </style>
-	 <?php
-	 include_once "style.php";
-	 include_once "script.php";
-	 ?>
-</head>
-<body class="navbar-top-sm-xs">
 <input type="hidden" id="recid" value="<?php echo $_GET['clientdetails'];?>"/>
 <input type="hidden" id="userid" value="<?php echo $_SESSION['user_id'];?>"/>
 
-<!--Top navbars position-->
-<div class="navbar-fixed-top">
-<!-- Main navbar -->
-
-	<div class="navbar navbar-inverse bg-beige navbar-main-sm">
-		<div class="navbar-header">
-			<a class="navbar-brand" <h2 style="font-size: 18px;">Adro</h2></a>
-		</div>
-		<div class="navbar-collapse collapse" id="navbar-first">
-			<ul class="nav navbar-nav navbar-right">
-				
-				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img class="main_nav_img" src="assets/images/placeholder.jpg" alt="">
-						<span><?php echo $orgname;?></span>
-						<i class="caret"></i>
-					</a> 
-
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-						<li><a href="#"><span class="badge badge-warning pull-right"></span> <i class="icon-comment-discussion"></i> Messages</a></li>
-						<li class="divider"></li>
-						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<li><a href="adminlogout.php"><i class="icon-switch2"></i> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /main navbar -->
-
-	<!-- Second navbar -->
-<div class="navbar-collapse collapse" id="navbar-second">
-	<div class="navbar navbar-default navbar-second-sm">
-		<ul class="nav navbar-nav no-border visible-xs-block">
-			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-		</ul>
-
-		<div class="navbar-collapse collapse" id="navbar-second-toggle">
-			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
-				<li class="active"><a href=""><i class="icon-puzzle4 position-left"></i> TDS</a></li>
-				<!--li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- /second navbar -->
-</div>
-<!--/Top navbars position-->
-
 		<!-- Client details -->
   <div class="col-lg-12" style="margin-top:20px";>
-		<div class="panel panel-flat" style="margin-top: 25px;">
+		<div class="panel panel-flat newpanel">
 					<table class="table table condensed">
 						<h3 style = "margin-left:15px">Organization TDS Information</h3>
 						<thead>
@@ -362,7 +279,7 @@ $data2 = mysqli_query($conn , $sql2);
 
 <!-----Attach File Table--->
 	<div class="col-lg-12">
-	<div class ="panel panel-flat" style="margin-top:5px"> 
+	<div class ="panel panel-flat newpanel"> 
 		<div class="table-responsive pre-scrollable" style="max-height:250px">
 
 		<table class="table table-hover table-condensed">

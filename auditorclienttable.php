@@ -22,10 +22,9 @@ $data2 = mysqli_query($conn , $sql2);
 
 
 <!--Client Table-->
-<div class="panel panel-flat">
-<div class="table-responsive pre-scrollable" style="max-height:506px">
-					
-	<table class="table table-hover table-condensed">
+<div class="panel panel-flat newpanel">
+<div class="table-responsive pre-scrollable" style="max-height:506px;">
+	<table class="table table-hover table-condensed newtable">
 		<thead>
 			<tr>
 				

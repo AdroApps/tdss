@@ -1,16 +1,18 @@
 <?php
 include_once "conn.php";
-if(isset($_GET['delete'])) {
-	$id = $_GET['delete'];
+
+	$id = $_POST['id'];
+	
 	$sql = "DELETE FROM `usercreate` WHERE `id` = '".$id."'";
 	$data = mysqli_query($conn, $sql);
-	$row = mysqli_fetch_array($data);
 	if($data) {
-		header('Location:usertable.php');
+			$status= "success";
 	}
 	else {
-		echo "not";
+		$status= "failure";
 	}
-}
+ echo json_encode([$status]);
+
 ?>
+
 

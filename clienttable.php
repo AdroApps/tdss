@@ -289,7 +289,6 @@ $data2 = mysqli_query($conn , $sql2);
 </div>
 
 <script>
-var url = "http://localhost:8080/tds/";
 
 $("body").on("click","#edit-submit",function(){ 
 		var year=$('#edit-year').val();

@@ -12,6 +12,9 @@ function active($currect_page){
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+var url = "http://localhost:8080/tdss/";
+</script>
 <title>client addemployee table</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel ="stylesheet" href="css/style.css">
