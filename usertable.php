@@ -1,24 +1,12 @@
 <?php
 include_once "conn.php";
-session_set();
-//$sql = "SELECT * FROM `usercreate` ";
-//$data = mysqli_query($conn , $sql);
+include_once "header.php";
 
-$sql2 = "SELECT * FROM `admincreate` WHERE `email` = '".$_SESSION['e']."' ";
-$data2 = mysqli_query($conn , $sql2);
+$sql2 = "SELECT * FROM `usercreate` WHERE `userid` = '".$_SESSION['user_id']."' ";
 
-	while($row = mysqli_fetch_assoc($data2)) {
-	$username = $row['username'];
-	$orgname  = $row['organization'];
-	$mail = $row['email'];
-	$password = $row['password'];
-	$number  = $row['number'];
-	
-}
-//$username ="";
-$sql1 = "SELECT * FROM `usercreate` WHERE `username` = '".$username."'";
-$data1= mysqli_query($conn,$sql1);
+$data1 = mysqli_query($conn , $sql2);
 
+/*
 if(isset($_POST['organization']))
 {
 	$organization  = $_POST['organization'];
@@ -30,107 +18,26 @@ if(isset($_POST['organization']))
 	$city = $_POST['city'];
 	$area = $_POST['area'];
 	$service = $_POST['service'];
+	$userid = $_SESSION['user_id'];
 	
 	
-	
-	$sql = "INSERT INTO `usercreate` ( `organization` , `email` , `password` , `pname` , `number` , `tan` , `city` , `area` , `service` , `username`) VALUES ('".$organization."' , '".$mail."' , '".$password."' , '".$pname."' , '".$number."' , '".$tan."' , '".$city."' , '".$area."' , '".$service."' , '".$username."')";
+	$sql = "INSERT INTO `usercreate` ( `organization` , `email` , `password` , `pname` , `number` , `tan` , `city` , `area` , `service` , `username`,`userid`) VALUES ('".$organization."' , '".$mail."' , '".$password."' , '".$pname."' , '".$number."' , '".$tan."' , '".$city."' , '".$area."' , '".$service."' , '".$username."', '".$userid."')";
 	$data = mysqli_query($conn,$sql);
 	echo $sql;
 	if($data)
 	{
-		echo 'moved database';
+		$txt =  'moved database';
 	}
 	else{
-		echo 'not moved'.mysqli_error($conn);
+		$txt =  'not moved'.mysqli_error($conn);
 	}
-}
-
+}*/
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Client Login Details</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel = "stylesheet" href="css/style.css">
-	
-	 <style>
-	 .main_nav_img {
-			    max-height: 30px !important;
-				margin-top: -6px !important;
-				border-radius: 50%;		
-				}
-				
-		.navbar-main-sm {
-			height: 44px !important;
-			min-height: 44px !important;
-			}
-			
-		.navbar-second-sm {
-			height: 40px !important;
-			min-height: 44px !important;
-			
-			}
-	 </style>
-	 <?php
-	 include_once "style.php";
-	 include_once "script.php";
-	 ?>
-</head>
-<body class="navbar-top-sm-xs">
 
-<!--Top navbars position-->
-<div class="navbar-fixed-top">
-<!-- Main navbar -->
-
-	<div class="navbar navbar-inverse bg-beige navbar-main-sm">
-		<div class="navbar-header">
-			<a class="navbar-brand" <h2 style="font-size: 18px;">Adro</h2></a>
-		</div>
-		<div class="navbar-collapse collapse" id="navbar-first">
-			<ul class="nav navbar-nav navbar-right">
-				
-				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img class="main_nav_img" src="assets/images/placeholder.jpg" alt="">
-						<span><?php echo "$orgname";?></span>
-						<i class="caret"></i>
-					</a> 
-
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-						<li><a href="#"><span class="badge badge-warning pull-right"></span> <i class="icon-comment-discussion"></i> Messages</a></li>
-						<li class="divider"></li>
-						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<li><a href="adminlogout.php"><i class="icon-switch2"></i> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /main navbar -->
-
-	<!-- Second navbar -->
-<div class="navbar-collapse collapse" id="navbar-second">
-	<div class="navbar navbar-default navbar-second-sm">
-		<ul class="nav navbar-nav no-border visible-xs-block">
-			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-		</ul>
-
-		<div class="navbar-collapse collapse" id="navbar-second-toggle">
-			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
-				<!--li class=""><a href="usercreate.php"><i class="icon-puzzle4 position-left"></i>AddUser</a></li-->
-				<li class="active"><a href="usertable.php"><i class="icon-puzzle4 position-left"></i>Clients</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- /second navbar -->
-</div>
 <!--/Top navbars position-->
 <!--page header-->
-	<button type="New" class="btn btn-xs  btn-default" data-toggle="modal" data-target="#myModal">New</button>
+	<button type="New" class="btn btn-xs btnbg btncls btn-default" data-toggle="modal" data-target="#myModal">New</button>
 <!--page header-->
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -168,10 +75,10 @@ if(isset($_POST['organization']))
 						<div class="form-group">
 						<input type="text" class ="form-control" id="area" name="area" Placeholder="Enter Area">
 						</div>
-						<div cass="form-group">
-						<input tpye="text" class="form-control" id="service" name="service" Placeholder="Enter Service Charges">
+						<div class="form-group">
+						<input type="text" class="form-control" id="service" name="service" Placeholder="Enter Service Charges">
 					    </div>
-						<input type="submit" name="submit" value="submit" class="btn btn-md btn-success">
+						<input type="submit" name="submit" value="submit" class="btn btn-md btnbg btn-success">
 
 					</form>
 </div>
@@ -180,9 +87,9 @@ if(isset($_POST['organization']))
 </div>
 </div>
 <!---modal-->
-<div class="panel panel-flat">
-<div class="table-responsive pre-scrollable" style="max-height:506px; margin-top: 5px;">
-	<table class="table table-hover table-condensed">
+<div class="panel panel-flat newpanel">
+<div class="table-responsive pre-scrollable" style="max-height:506px;">
+	<table class="table table-hover table-condensed newtable">
 		<thead>
 			<tr>
 				
@@ -201,7 +108,7 @@ if(isset($_POST['organization']))
 			<?php
 			
 			while($row=mysqli_fetch_array($data1)){
-				
+
 				//echo"<tr>
 				//<td>".$row[0]."</td>";
 				echo"<tr>
@@ -249,5 +156,3 @@ if(isset($_POST['organization']))
 </div>
 </div>
 
-</body>
-</html>

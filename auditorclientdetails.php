@@ -1,5 +1,6 @@
 <?php
 include_once "conn.php";
+//session_set();
 $id = $_GET['clientdetails'];
 $quarter ="";
 $sql = "SELECT * From `clienttable` WHERE `id` = '".$id."' ";
@@ -59,11 +60,11 @@ while($row = mysqli_fetch_array($data2)) {
 ?>
 <?php
 include_once "conn.php";
-$sql4 = "SELECT * FROM `fileuploads`  WHERE userid=".$id." ORDER BY date DESC";
+$sql4 = "SELECT * FROM `fileuploads` WHERE userid=".$id." ORDER BY date DESC ";
 $data4 = mysqli_query($conn, $sql4);
 			
 if(isset($_POST['filesubmit'])) {
-	$date = date("Y/m/d h:i:s" );
+	$date = date("Y/m/d h:i:s");
 
     //$email = $_POST['email'];
     if(!empty($_FILES['file_url']['name'])) {
@@ -77,17 +78,18 @@ if(isset($_POST['filesubmit'])) {
 		//$created = $time;
 		if ($_FILES['file_url']['error'] !== UPLOAD_ERR_OK) {
 			die("upload failedwith error code" . $_FILES['file_url']['error']);
-			$txt= "error";
+			echo "error";
 		}
 		if (move_uploaded_file($fileTmpLoc, $store)) {
-			$sql3 = "INSERT into `fileuploads`(`file` , `date`,`userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
-
+			//$path = "http://localhost:8080/tds/fileuploads/$filename";
+			
+			$sql3 = "INSERT into `fileuploads`(`file` , `date` , `userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
 			$data3 = mysqli_query($conn, $sql3);
 			if($data3) {
-				$txt= "success";
+				echo "success";
 			}
 			else {
-				 $txt= "not".mysqli_error($conn);
+				  $txt = "not".mysqli_error($conn);
 			 }
 		}
 	} else {
@@ -142,6 +144,7 @@ $data2 = mysqli_query($conn , $sql2);
 <body class="navbar-top-sm-xs">
 <input type="hidden" id="recid" value="<?php echo $_GET['clientdetails'];?>"/>
 <input type="hidden" id="userid" value="<?php echo $_SESSION['user_id'];?>"/>
+
 <!--Top navbars position-->
 <div class="navbar-fixed-top">
 <!-- Main navbar -->
@@ -182,8 +185,6 @@ $data2 = mysqli_query($conn , $sql2);
 
 		<div class="navbar-collapse collapse" id="navbar-second-toggle">
 			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-			
-					<li class=""><a href="auditorclienttable.php?organization=<?php echo $_SESSION['org'];?>"><i class="icon-arrow-left8 position-left"></i>Back</a></li>
 				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
 				<li class="active"><a href=""><i class="icon-puzzle4 position-left"></i> TDS</a></li>
 				<!--li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
@@ -219,8 +220,8 @@ $data2 = mysqli_query($conn , $sql2);
 								<td><?php echo "$tan";?></td>
 								<td><?php echo "$year";?></td>
 								<td><?php echo "$quarter";?></td>
-								<td><?php // echo "$status";?>
-
+								<td><?php //echo "$status";?>
+								
 								<div class="form-group">
 				<select  id="status" name="status" class="form-control statuschange">
 				        <option <?php echo ($status == '') ? "selected='selected'" : ''; ?>>Select Status</option>
@@ -348,9 +349,9 @@ $data2 = mysqli_query($conn , $sql2);
 
 <!-----Attach file form---->
 <form action="" method="post" enctype="multipart/form-data">
-			<center><div>
+			<center><div style="position:relative">
                             <a class="btn btn-sm btn-default" href="javascript:;" style="margin-bottom:30px">
-                                <input type="file" name="file_url" multiple>
+                                <input type="file" name="file_url">
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
                             <input type="submit"  class="btn btn-sm btn-default" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
@@ -442,5 +443,6 @@ $(document).ready(function() {
     });
 });
 </script>
+
 </body>
 </html>

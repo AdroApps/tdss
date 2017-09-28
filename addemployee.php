@@ -1,25 +1,25 @@
 <?php
 include_once "conn.php";
-if(isset($_POST['name']))   {
-	$ename = $_POST['name'];
+include_once "header.php";
+if(isset($_POST['ename']))   {
+	$ename = $_POST['ename'];
 	$pan = $_POST['number'];
-	$adhar = $_POST['number'];
+	$adhar = $_POST['num'];
 
-	$sql = "INSERT INTO `addemployee`(`employeename` , `pan` ,`adhar`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."')";  
-	
+	$sql = "INSERT INTO `addemployee`(`employeename` , `pan` ,`adhar`,`userid`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."','".$_SESSION['user_id']."')";  
+
 	$data  = mysqli_query($conn,$sql);
 	
-	echo $sql;
 	if($data)
 	{
-		echo 'moved database' ;
+		$txt= 'moved database' ;
 	}
 	else
 	{
-		echo 'not moved'.mysqli_error($conn);
+		$txt =  'not moved'.mysqli_error($conn);
 	}
   }
-  $sql1 = "SELECT * FROM `addemployee`";
+  $sql1 = "SELECT * FROM `addemployee` WHERE userid=".$_SESSION['user_id'];
   $data1 = mysqli_query($conn, $sql1);
  
 	if($data1)
@@ -32,137 +32,51 @@ if(isset($_POST['name']))   {
 	}
   
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>client addemployee table</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel ="stylesheet" href="css/style.css">
-	 <style>
-	 .main_nav_img {
-			    max-height: 30px !important;
-				margin-top: -6px !important;
-				border-radius: 50%;		
-				}
-				
-		.navbar-main-sm {
-			height: 44px !important;
-			min-height: 44px !important;
-			}
-			
-		.navbar-second-sm {
-			height: 40px !important;
-			min-height: 44px !important;
-			
-			}
+
+<button type="New" class="btn btn-xs btncls btn-default" data-toggle="modal" data-target="#myModal">New Employee</button>
 	
- 
-	 </style>
-	 <?php
-	 include_once "style.php";
-	 include_once "script.php";
-	 ?>
-</head>
-<body class="navbar-top-sm-xs">
 
-<!--Top navbars position-->
-<div class="navbar-fixed-top">
-<!-- Main navbar -->
-
-	<div class="navbar navbar-inverse bg-beige navbar-main-sm">
-		<div class="navbar-header">
-			<a class="navbar-brand" <h2 style="font-size: 18px;">Adro</h2></a>
-		</div>
-		<div class="navbar-collapse collapse" id="navbar-first">
-			<ul class="nav navbar-nav navbar-right">
-				
-				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img class="main_nav_img" src="assets/images/placeholder.jpg" alt="">
-						<span>User</span>
-						<i class="caret"></i>
-					</a> 
-
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-						<li><a href="#"><span class="badge badge-warning pull-right"></span> <i class="icon-comment-discussion"></i> Messages</a></li>
-						<li class="divider"></li>
-						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<li><a href="logout.php"><i class="icon-switch2"></i> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /main navbar -->
-
-	<!-- Second navbar -->
-<div class="navbar-collapse collapse" id="navbar-second">
-	<div class="navbar navbar-default navbar-second-sm">
-		<ul class="nav navbar-nav no-border visible-xs-block">
-			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-		</ul>
-
-		<div class="navbar-collapse collapse" id="navbar-second-toggle">
-			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
-				<li class=""><a href="clienttable.php"><i class="icon-puzzle4 position-left"></i> TDS</a></li>
-				<!--<li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
-				<li class="active"><a href="addemployee.php"><i class="icon-puzzle4 position-left"></i>AddEmployee</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- /second navbar -->
-</div>
-<!--/Top navbars position-->
-
-<!--page header-->
-	<button type="New" class="btn btn-xs  btn-default" data-toggle="modal" data-target="#myModal">New</button>
-						
-
-<!--page header-->
-<div class="panel panel-flat">
-<div class="table-responsive pre-scrollable" style="max-height:506px">
-					
-	<table class="table table-hover table-condensed">
+<div class="panel panel-flat panelflat newpanel">
+<table class="table table-hover table-condensed">
 		<thead>
 			<tr>
 				
 
-				<th>Employee Name</th>
-				<th>Pan Number</th>
-				<th>Adhar Number</th>
+				<th width="25%">Employee Name</th>
+				<th width="25%">Pan Number</th>
+				<th width="25%">Adhar Number</th>
+				<th width="10%">Edit</th>
+				<th width="10%">Delete</th>
 				
 			</tr>
 		</thead>
+		</table>
+<div class="table-responsive pre-scrollable newtable">
+					
+	<table class="table table-hover table-condensed">
+	
 		<tbody>
 			<?php
 				
 				while($row = mysqli_fetch_array($data1)){
 					
-					echo "<tr>
-					<td>".$row[1]."</td>";
+					echo "<tr id=".$row[0].">
+					<td width='25.5%' class='edit-pan'>".$row[2]."</td>";
 					echo
-					"<td>".$row[2]."</td>";
+					"<td width='25.5%' class='edit-name'>".$row[3]."</td>";
 					echo
-					"<td>".$row[3]."</td>";
+					"<td width='25.5%' class='edit-adhar'>".$row[4]."</td>";
 					echo"
-					  <td><class='text-center'>
-							<ul class='icons-list'>
-								<li class='dropdown'>
-									  <a href='#' class='dropdown-toggle' data-toggle='dropdown' >
-										
-										  <span class='glyphicon glyphicon-collapse-down'></span>
-										</a>
-									
-									<ul class='dropdown-menu dropdown-menu-right' >
-											<li><a href='aedit.php?edit=$row[0]'> Edit</a></li>
-											<li><a href='adelete.php?delete=$row[0]'>Delete</a></li>
-									</ul>
-								</li>
-							</ul>
-					 </td>
+					 <td width='10%'>
+						<a data-toggle='modal' data-target='#myEmployeeModal' class='edit_addemployee btn btn-xs btnbg'>
+							<span class='glyphicon glyphicon-edit'></span>
+						</a>
+					</td>
+					<td width='10%'>
+						<a href='adelete.php?delete=$row[0]' class='btn btn-xs btnbg'>
+							<span class='glyphicon glyphicon-trash'></span>
+						</a>
+					</td>
 					 </tr>";
 					
 				
@@ -194,10 +108,10 @@ if(isset($_POST['name']))   {
 				<input type="text" class="form-control" id="name" name="ename" Placeholder="Enter Employee FullName">
 			</div>
 			<div class="form-group">
-				<input type="text" class ="form-control" id="adhar" name="number" Placeholder="Enter Adhar Number">
+				<input type="text" class ="form-control" id="adhar" name="num" Placeholder="Enter Adhar Number">
 			</div>
 			
-		<input type="submit" value="submit" class="btn btn-md btn-primary">
+		<input type="submit" value="submit"  class="btn btn-md btn-primary">
 	</form>
 	</div>
 	</div>
@@ -205,7 +119,95 @@ if(isset($_POST['name']))   {
 </div>
 </div>
 <!---modal--->
-</body>
-</html>
-	 
 
+<!-----EDIT MODAL---->
+
+<!-- Modal -->
+<div id="myEmployeeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">EDIT ENTRY</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+		<input type="hidden" id="edit-id"/>
+			<div class="form-group">
+				<input type="text" class ="form-control" id="edit-pan" name="number" Placeholder="Enter Pan Number">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="edit-name" name="ename" Placeholder="Enter Employee FullName">
+			</div>
+			<div class="form-group">
+				<input type="text" class ="form-control" id="edit-adhar" name="num" Placeholder="Enter Adhar Number">
+			</div>
+			
+		<input type="button" value="submit"  id="edit-submit" class="btn btn-md btn-primary btnbg">
+	</form>
+	</div>
+	</div>
+	<!----/modal Content--->
+</div>
+</div>
+<!---modal--->
+
+<script>
+var url = "http://localhost/tds_cleaned/";
+
+$("body").on("click","#edit-submit",function(){
+		var id=$('#edit-id').val();
+		var name= $('#edit-name').val();
+		var number=$('#edit-pan').val();
+		 var adhar=$('#edit-adhar').val();
+
+		$.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'aedit.php',
+        data:{id:id,number:number,name:name,adhar:adhar}
+    }).done(function(data){       
+        alert('Record Updated Successfully.');
+		$('#myEmployeeModal').modal('hide');
+        location.reload();
+    });
+	
+});
+ $("body").on("click",".edit_addemployee",function(){
+      var $tr = $(this).closest('tr');
+	   
+	  console.log($('.edit-name' , $tr).text());
+	  console.log($('.edit-name' , $tr).html());
+	   var id=$tr.attr('id');
+	   var name = $('.edit-name' , $tr).text();
+	  // console.log(name);
+	   var pan =  $('.edit-pan', $tr).text();
+	   var adhar =  $('.edit-adhar', $tr).text();
+	   
+		$('#edit-id').val(id);
+        $('#edit-pan').val(pan);
+        $('#edit-name').val(name);
+		$('#edit-adhar').val(adhar);
+        });
+$("body").on("click",".remove-item",function(){
+    var id = $(this).attr('id');
+    var c_obj = $(this).parent().parent();
+	console.log(c_obj);
+   var r = confirm("Are you sure you want to delete this?");
+    if (r == true) {
+    $.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'adelete.php',
+        data:{id:id}
+    }).done(function(data){
+        c_obj.remove();
+        alert('Record Deleted Successfully.');
+       
+    });
+ }
+
+});
+</script>

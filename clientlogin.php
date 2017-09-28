@@ -15,7 +15,7 @@ if(isset($_POST['sub'])){
 	  while($row=mysqli_fetch_assoc($result)) {
         $email=$row['email'];
         $password=$row['password'];
-		 $_SESSION['user_id'] = $row['id'];
+        $_SESSION['user_id'] = $row['id'];
         //$name = $row['name'];
     }
     if($email == $mail && $password == $pwd) {
@@ -23,11 +23,9 @@ if(isset($_POST['sub'])){
         
         header('Location:clienttable.php');
         $_SESSION['e'] = $_POST['mail'];
-        echo $_SESSION['e'];
-        echo $_POST['mail'];
-       
-
-	}
+         $_SESSION['type']='user';
+        
+    }
 }
     else {
         echo "<center><h2 style='margin-top:10px;color:red;font-size:18px'>incorrect Email/Password</h2></center>";

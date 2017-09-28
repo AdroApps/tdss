@@ -1,6 +1,7 @@
 <?php
 include_once "conn.php";
-session_set();
+include_once "header.php";
+//session_set();
 $id = $_GET['clientdetails'];
 $sql = "SELECT * From `clienttable` WHERE `id` = '".$id."' ";
 $data= mysqli_query($conn,$sql);
@@ -25,7 +26,7 @@ $tdsamount1tot = "";
 $tdsamount2tot = "";
 $tdsamount3tot = "";
 
-$sql1 = "SELECT * FROM `employeetable` WHERE `quarter` = '".$quarter."' AND`organization` = '".$organization."'  ";
+$sql1 = "SELECT * FROM `clienttable` WHERE `quarter` = '".$quarter."' AND `organization` = '".$organization."'  ";
 
 $data1= mysqli_query($conn,$sql1);
 $data2= mysqli_query($conn,$sql1);
@@ -56,14 +57,20 @@ while($row = mysqli_fetch_array($data2)) {
     }
 	$totaltdsamount = $tdsamount1tot + $tdsamount2tot + $tdsamount3tot+$service;
 	
-?>
+?>  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ 
+  <script src="js/jquery.dataTables.min.js"></script>
+  <script src="js/dataTables.bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+	
 <?php
-include_once "conn.php";
-$sql4 = "SELECT * FROM `fileuploads` ";
+
+$sql4 = "SELECT * FROM `fileuploads` WHERE userid=".$id." ORDER BY date DESC";
 $data4 = mysqli_query($conn, $sql4);
 			
 if(isset($_POST['filesubmit'])) {
-	$date = date("Y/m/d");
+	$date = date("Y/m/d h:i:s");
 
     //$email = $_POST['email'];
     if(!empty($_FILES['file_url']['name'])) {
@@ -80,16 +87,15 @@ if(isset($_POST['filesubmit'])) {
 			echo "error";
 		}
 		if (move_uploaded_file($fileTmpLoc, $store)) {
-			$path = "http://localhost:8080/tds/fileuploads/$filename";
-			echo $path;
-			echo "farheen";
-			$sql3 = "INSERT into `fileuploads`(`file` , `date`) VALUES ('".$path."' , '".$date."')";
+			//$path = "http://localhost:8080/tds/fileuploads/$filename";
+			//echo $path;
+			$sql3 = "INSERT into `fileuploads`(`file` , `date` , `userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
 			$data3 = mysqli_query($conn, $sql3);
 			if($data3) {
-				echo "success";
+				$txt = "success";
 			}
 			else {
-				 echo "not".mysqli_error($conn);
+				 $txt= "not".mysqli_error($conn);
 			 }
 		}
 	} else {
@@ -99,94 +105,10 @@ if(isset($_POST['filesubmit'])) {
 }
 	?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>Client Form</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel = "stylesheet" href="css/style.css">
-	
-	 <style>
-	 .main_nav_img {
-			    max-height: 30px !important;
-				margin-top: -6px !important;
-				border-radius: 50%;
-				}
-				
-		.navbar-main-sm {
-			height: 44px !important;
-			min-height: 44px !important;
-			}
-			
-		.navbar-second-sm {
-			height: 40px !important;
-			min-height: 44px !important;
-			
-			}
-	 </style>
-	 <?php
-	 include_once "style.php";
-	 include_once "script.php";
-	 ?>
-</head>
-<body class="navbar-top-sm-xs">
-
-<!--Top navbars position-->
-<div class="navbar-fixed-top">
-<!-- Main navbar -->
-
-	<div class="navbar navbar-inverse bg-beige navbar-main-sm">
-		<div class="navbar-header">
-			<a class="navbar-brand" <h2 style="font-size: 18px;">Adro</h2></a>
-		</div>
-		<div class="navbar-collapse collapse" id="navbar-first">
-			<ul class="nav navbar-nav navbar-right">
-				
-				<li class="dropdown dropdown-user">
-					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img class="main_nav_img" src="assets/images/placeholder.jpg" alt="">
-						<span><?php echo "$organization";?></span>
-						<i class="caret"></i>
-					</a> 
-
-					<ul class="dropdown-menu dropdown-menu-right">
-						<li><a href="#"><i class="icon-user-plus"></i> My profile</a></li>
-						<li><a href="#"><span class="badge badge-warning pull-right"></span> <i class="icon-comment-discussion"></i> Messages</a></li>
-						<li class="divider"></li>
-						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<li><a href="clientlogout.php"><i class="icon-switch2"></i> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<!-- /main navbar -->
-
-	<!-- Second navbar -->
-<div class="navbar-collapse collapse" id="navbar-second">
-	<div class="navbar navbar-default navbar-second-sm">
-		<ul class="nav navbar-nav no-border visible-xs-block">
-			<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
-		</ul>
-
-		<div class="navbar-collapse collapse" id="navbar-second-toggle">
-			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
-				<li class="active"><a href="clienttable.php"><i class="icon-puzzle4 position-left"></i> TDS</a></li>
-				<li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- /second navbar -->
-</div>
-<!--/Top navbars position-->
-
 		<!-- Client details -->
-  <div class="col-lg-12" style="margin-top:20px";>
-		<div class="panel panel-flat" style="margin-top: 25px;">
-					<table class="table table condensed">
-						<h3 style = "margin-left:15px">Organization TDS Information</h3>
+	<div class="panel panel-flat panelflat newpanel">
+			<table class="table table-hover table-condensed" >
+					<h3 style = "margin-left:15px">Organization TDS Information</h3>
 						<thead>
 							<tr>
 								<th>Organization</th>
@@ -213,119 +135,69 @@ if(isset($_POST['filesubmit'])) {
 								
 							</tr>
 						</tbody>
-					</table>	
+			</table>	
 			<!-- /client details -->
 			
 			<!-----Quarter Table---->
 					
-						<table class= "table table condensed">
-						<h3 style = "margin-left:15px">Quarter - <?php echo "$quarter";?></h3>
-							<tr>
-								<th><?php echo "$month1";?></th>
-								<td>Total Tds amount : <?php echo "$tdsamount1tot";?></td>
-							</tr>
-							<tr>
-								<th><?php echo "$month2";?></th>
-								<td>Total Tds amount  :  <?php echo "$tdsamount2tot";?></td>
-							</tr>
-							
-							<tr>
-								<th><?php echo "$month3";?></th>
-								<td>Total Tds amount  :  <?php echo "$tdsamount3tot";?></td>
-							</tr>
-							<tr>
-								<th></th>
-								<td>Service Charges : <?php echo "$service";?></td>
-							</tr>
-							<tr>
-								<th></th>
-								<td>Grand Total : <?php echo "$totaltdsamount";?></td>
-							</tr>
-						
-						</table>
-				</div>
-		</div>
+			<table class= "table table condensed">
+				<h3 style = "margin-left:15px">Quarter - <?php echo "$quarter";?></h3>
+				<tr>
+					<th><?php echo "$month1";?></th>
+					<td>Total Tds amount : <?php echo "$tdsamount1tot";?></td>
+				</tr>
+				<tr>
+					<th><?php echo "$month2";?></th>
+					<td>Total Tds amount  :  <?php echo "$tdsamount2tot";?></td>
+				</tr>
+				
+				<tr>
+					<th><?php echo "$month3";?></th>
+					<td>Total Tds amount  :  <?php echo "$tdsamount3tot";?></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>Service Charges : <?php echo "$service";?></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>Grand Total : <?php echo "$totaltdsamount";?></td>
+				</tr>
+			
+			</table>
+	</div>
 	<!-----Quarter Table---->
 			
 		<!--Employee table-->
-	<center><a href="newemployee.php?clientdetails=<?php echo $id; ?>" class="btn btn-sm btn-default">New</a></center>
-	<div class="col-lg-12">
+	
+	<center>
+	<!--div class="col-lg-12">
 	<div class ="panel panel-flat" style="margin-top:5px"> 
-		<div class="table-responsive pre-scrollable" style="max-height:506px">
-
-		<table class="table table-hover table-condensed">
-		<thead>
-			<tr>
-			
-				<th>Employee Fullname</th>
-				<th>Pan Number</th>
-				<th>Month 1</th>
-				<th>salary</th>
-				<th>TDS amount</th>
-				<th>Month 2</th>
-				<th>salary</th>
-				<th>TDS amount</th>
-				<th>Month 3</th>
-				<th>salary</th>
-				<th>TDS amount</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-				
-				//if($data1=""){
-					//echo "<tr><td>No Data to Display</td></tr>";
-					//}
-				//else {
-					
-				while($row = mysqli_fetch_array($data1)){
-					
-					echo "<tr>
-					<td>".$row[1]."</td>";
-					echo
-					"<td>".$row[2]."</td>";
-					echo
-					"<td>".$row[3]."</td>";
-					echo
-					"<td>".$row[4]."</td>";
-					echo
-					"<td>".$row[5]."</td>";
-					echo
-					"<td>".$row[6]."</td>";
-					echo
-					"<td>".$row[7]."</td>";
-					echo
-					"<td>".$row[8]."</td>";
-					echo
-					"<td>".$row[9]."</td>";
-					echo
-					"<td>".$row[10]."</td>";
-					echo
-					"<td>".$row[11]."</td>";
-					echo"
-					 <td><class='text-center'>
-							<ul class='icons-list'>
-								<li class='dropdown'>
-									  <a href='#' class='dropdown-toggle' data-toggle='dropdown' >
-										
-										  <span class='glyphicon glyphicon-collapse-down'></span>
-										</a>
-									
-									<ul class='dropdown-menu dropdown-menu-right' >
-											<li><a href='eedit.php?edit=$row[0]'> Edit</a></li>
-											<li><a href='edelete.php?delete=$row[0]'>Delete</a></li>
-									</ul>
-								</li>
-							</ul>
-					 </td>
-					 </tr>";
-				}
-			//}
-				?>
-		</tbody>
+		<div class="table-responsive pre-scrollable" style="max-height:506px"-->
+<div class="panel panel-flat panelflat newpanel">
+	<div  id="add"  class="btn btn-sm btn-default btnbg" style="text-align:right;">Add New Employee</div>
+	<div class="table-responsive pre-scrollable noscroll">
+     
+<table class="table table-hover table-condensed" id="user_data">
+ <thead>
+      <tr>
+      <th>Employee Fullname</th>
+				<th width="5%">Pan Number</th>
+				<th width="5%">Month 1</th>
+				<th width="5%">salary</th>
+				<th width="5%">TDS amount</th>
+				<th width="5%">Month 2</th>
+				<th width="5%">salary</th>
+				<th width="5%">TDS amount</th>
+				<th width="5%">Month 3</th>
+				<th width="5%">salary</th>
+				<th width="5%">TDS amount</th>
+		
+       <th>Delete</th>
+      </tr>
+     </thead>
 
 	</table>
-</div>
 </div>
 </div>
 <!--/Employee table-->
@@ -339,22 +211,29 @@ if(isset($_POST['filesubmit'])) {
                                 <input type="file" name="file_url">
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
-                            <input type="submit"  class="btn btn-sm btn-default" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
+                            <input type="submit"  class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
              </div>
             				
 		</form>
-	<div class ="panel panel-flat" style="margin-top:5px"> 
-		<div class="table-responsive pre-scrollable" style="max-height:250px">
-
-		<table class="table table-hover table-condensed">
+	<div class="panel panel-flat panelflat newpanel">
+					
+	<table class="table table-hover table-condensed">
+	
 				<thead>
 					<tr>
-						<th>File</th>
-						<th>Date</th>
+						<th width="25%">Name</th>
+						<th width="25%">View</th>
+						<th width="25%">Download</th>
+						<th width="25%">Date</th>
 					</tr>
 				</thead>
+			</table>
+			<div class="table-responsive pre-scrollable noscroll">
+     
+ <table class="table table-hover table-condensed">
+
 				<tbody>
-				<?php
+				<!--?php
 				while($roww = mysqli_fetch_array($data4)){
 					
 					
@@ -365,18 +244,169 @@ if(isset($_POST['filesubmit'])) {
 					
 					"</tr>";
 				}
-				?>
+				?-->
+				<?php
+				 $currentPath = $_SERVER['PHP_SELF']; 
+
+				 // output: Array ( [dirname] => /myproject [basename] => index.php [extension] => php [filename] => index ) 
+				 $pathInfo = pathinfo($currentPath); 
+
+				 // output: localhost
+				 $hostName = $_SERVER['HTTP_HOST']; 
+
+				 // output: http://
+				 $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'?'https':'http';
+
+				 // return: http://localhost/myproject/
+				  $url=$protocol.'://'.$hostName.$pathInfo['dirname']."/fileuploads/";
+
+				while($roww = mysqli_fetch_array($data4)){
+				 
+				 ?>
+				 
+				 <tr>
+				 <td width="25.5%"><?php echo $roww[3]?></td>
+				 
+				 <td width="25.5%"><a href="<?php echo $url.$roww[3];?>" target="_blank">View</a></td>
+				 
+				 <td width="25.5%"><a href="<?php echo $url.$roww[3];?>" download>Download</a></td>
+				 <?php echo
+				 "<td>".$roww[4]."</td>";
+				 
+				 "</tr>";
+				}
+			$_SESSION['clientdetails']=$_GET['clientdetails'];	?>
 				
 			</tbody>
 			
 			</table>
-	</div>
 </div>
 </div>
 <!-----/Attach File form and Table--->
 
-			
+<input type="hidden" id="qid" value="<?php echo $_GET['clientdetails'];?>"/>
 
-</body>
-</html>
+<script type="text/javascript" language="javascript" >
+ $(document).ready(function(){
+  
+  fetch_data();
+
+  function fetch_data()
+  {
+   var dataTable = $('#user_data').DataTable({
+    "processing" : true,
+    "serverSide" : true,
+    "order" : [],
+    "ajax" : {
+     url:"fetch.php",
+     type:"POST"
+    }
+   });
+   
+  $("#user_data").css("width","100%");
+  }
+  
+  function update_data(id, column_name, value)
+  {
+   $.ajax({
+    url:"update.php",
+    method:"POST",
+    data:{id:id, column_name:column_name, value:value},
+    success:function(data)
+    {
+     
+     $('#user_data').DataTable().destroy();
+     fetch_data();
+    }
+   });
+   setInterval(function(){
+    $('#alert_message').html('');
+   }, 5000);
+  }
+
+  $(document).on('blur', '.update', function(){
+   var id = $(this).data("id");
+   var column_name = $(this).data("column");
+   var value = $(this).text();
+   update_data(id, column_name, value);
+  });
+  
+  $('#add').click(function(){
+   var html = '<tr>';
+   html += '<td width="5%" contenteditable id="data1"></td>';
+   html += '<td width="5%" contenteditable id="data2"></td>';
+    html += '<td width="5%" contenteditable id="data3"></td>';
+   html += '<td width="5%" contenteditable id="data4"></td>';
+    html += '<td  width="5%" contenteditable id="data5"></td>';
+   html += '<td width="5%" contenteditable id="data6"></td>';
+    html += '<td width="5%" contenteditable id="data7"></td>';
+   html += '<td width="5%" contenteditable id="data8"></td>';
+    html += '<td width="5%" contenteditable id="data9"></td>';
+   html += '<td width="5%" contenteditable id="data10"></td>';
+    html += '<td width="5%" contenteditable id="data11"></td>';
+   html += '<td><button type="button" name="insert" id="insert" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></td>';
+   html += '<td></td>';
+   html += '</tr>';
+   $('#user_data tbody').prepend(html);
+  });
+  
+  $(document).on('click', '#insert', function(){
+   var first_name = $('#data1').text();
+   var pno = $('#data2').text();
+   var month1 = $('#data3').text();
+   var sal1 = $('#data4').text();
+   var tdsamt1 = $('#data5').text();
+   var month2 = $('#data6').text();
+   var sal2 = $('#data7').text();
+   var tdsamt2 = $('#data8').text();
+   var month3 = $('#data9').text();
+   var sal3 = $('#data10').text();
+   var tdsamt3 = $('#data11').text();
+   var qid=$('#qid').val();
+   if(first_name != '' && pno != '' && month1!='' && sal1!='' && tdsamt1!='' && month2!='' && sal2!='' && tdsamt2!=''  && month3!='' && sal3!='' && tdsamt3!='')
+   {
+    $.ajax({
+     url:"insert.php",
+     method:"POST",
+     data:{first_name:first_name, pno:pno,month1:month1,sal1:sal1,tdsamt1:tdsamt1,month2:month2,month3:month3,sal3:sal3,sal2:sal2,tdsamt2:tdsamt2,tdsamt3:tdsamt3,qid:qid},
+     success:function(data)
+     {
+      $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+      $('#user_data').DataTable().destroy();
+      fetch_data();
+     }
+    });
+    setInterval(function(){
+     $('#alert_message').html('');
+    }, 5000);
+   }
+   else
+   {
+    alert("Both Fields is required");
+   }
+  });
+  
+  $(document).on('click', '.delete', function(){
+   var id = $(this).attr("id");
+   if(confirm("Are you sure you want to remove this?"))
+   {
+    $.ajax({
+     url:"delete.php",
+     method:"POST",
+     data:{id:id},
+     success:function(data){
+      $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+      $('#user_data').DataTable().destroy();
+      fetch_data();
+     }
+    });
+    setInterval(function(){
+     $('#alert_message').html('');
+    }, 5000);
+   }
+  });
+  $("#user_data").css("width","100%");
+ });
+</script>
+
 

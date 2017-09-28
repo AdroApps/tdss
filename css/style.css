@@ -1,4 +1,4 @@
-.btn.btn-xs.btn-default{
+/*.btn.btn-xs.btn-default{
 	margin-left: 95%;
     margin-bottom: 8px;
     background-color: white;
@@ -9,4 +9,86 @@
  }
 .navbar-default .navbar-nav > .active > a:after{
 		margin-bottom : 6px;
+}*/
+
+.btn.btn-xs.btn-default{
+ margin-bottom: 8px;
+    background-color: white;
+    margin-top: 5px;
+    float: right;
+    background: lightgrey;
+ }
+.btn.btn-sm.btn-default{
+ background-color: white;
+ color:black;
+ }
+.navbar-default .navbar-nav > .active > a:after{
+  margin-bottom : 6px;
+}
+.newtable{min-height: 410px!important;overflow-y: scroll;overflow-x: hidden!important;}
+.noscroll{overflow-x: hidden!important;}
+.newpanel{margin: 4px 2%;}
+.newpanel h3{padding-top:1%}
+.btncls,.btncls:hover{
+    background-color: #273246!important;
+	    position: absolute!important;
+    right: 0px;
+    z-index: 99999;
+    top: 7%;
+    border-radius: 5px;
+    right: 2%;
+    background: #273246;
+    color: white!important;
+    text-transform: uppercase!important;
+}
+.btnbg,.btnbg:hover{
+	background-color: #273246!important;
+    border-color: #273246!important;
+	color: white!important;
+}
+a.btnbg {
+  color:#f5f5f5;
+  text-decoration: none;
+}
+a.btnbg:hover,
+a:focus.btnbg {
+  color:#f5f5f5;
+  text-decoration: none;
+}
+.dataTables_filter ,.dataTables_length{
+display: none!important; 
+}
+#user_data th{
+padding-left: 10px!important;
+    padding-right: 0px!important;    width: 10%!important;
+}
+.sorting, .sorting_asc, .sorting_desc {
+    background : none;
+}
+table.dataTable thead .sorting, 
+table.dataTable thead .sorting_asc, 
+table.dataTable thead .sorting_desc {
+    background : none;
+}.DataTables_sort_icon { display:none;}
+  .dataTable > thead > tr > th[class*="sort"]::after{display: none}table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after {
+    display: none!important;
+}.dataTable > thead > tr > th[class*=sort]:after{
+    display:none;
+}
+.dataTable > thead > tr > th[class*=sort]:before{
+    display:none;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus,#insert{
+	color:white!important;
+	background:#273246!important;
+}
+.pagination{ margin-top: 8%!important;
+}
+#user_data_info{
+    color: #273246!important;
+    font-weight: bold;
+    margin-left: 4%;
+    margin-top: 5%;
 }

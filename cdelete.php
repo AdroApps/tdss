@@ -1,16 +1,18 @@
 <?php
 include_once "conn.php";
 //session_set();
-if(isset($_GET['delete'])) {
-	$id = $_GET['delete'];
+
+	$id = $_POST['id'];
 	$sql = "DELETE FROM `clienttable` WHERE `id` = '".$id."'";
+	
 	$data = mysqli_query($conn, $sql);
-	$row = mysqli_fetch_array($data);
+	
 	if($data) {
-		header('Location:clienttable.php');
+			$status= "success";
 	}
 	else {
-		echo "not";
+		$status= "failure";
 	}
-}
+ echo json_encode([$status]);
+
 ?>
