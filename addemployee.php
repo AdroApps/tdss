@@ -6,7 +6,7 @@ if(isset($_POST['ename']))   {
 	$pan = $_POST['number'];
 	$adhar = $_POST['num'];
 
-	$sql = "INSERT INTO `addemployee`(`employeename` , `pan` ,`adhar`,`userid`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."','".$_SESSION['user_id']."')";  
+	$sql = "INSERT INTO `addemployee`(`employeename` , `pan` ,`adhar`,`userid`,`orgid`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."','".$_SESSION['user_id']."','".$_SESSION['user_id']."')";  
 
 	$data  = mysqli_query($conn,$sql);
 	
