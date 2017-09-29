@@ -36,7 +36,7 @@ if(isset($_POST['organization']))
 
 <!--/Top navbars position-->
 <!--page header-->
-	<button type="New" class="btn btn-xs btnbg btncls btn-default" data-toggle="modal" data-target="#myModal">New</button>
+	
 <!--page header-->
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -86,21 +86,23 @@ if(isset($_POST['organization']))
 </div>
 </div>
 <!---modal-->
-<div class="panel panel-flat newpanel">
-<div class="table-responsive pre-scrollable" style="max-height:506px;">
-	<table class="table table-hover table-condensed newtable">
+<div class="panel panel-flat panelflat newpanel">
+<div class="table-responsive pre-scrollable newtable" style="max-height:506px;">
+	<table class="table table-hover table-condensed ">
 		<thead>
 			<tr>
 				
 				<th>Organization Name</th>
 				<th>Email</th>
 				<th>Password</th>
-				<th>Authorised Personname</th>
+				<th>Authorised Person name</th>
 				<th>Phone Number</th>
 				<th>Tan</th>
 				<th>City</th>
 				<th>Area</th>
 				<th>Service</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -205,7 +207,10 @@ if(isset($_POST['organization']))
 
 
 <script>
-
+$( document ).ready(function() {
+	$('#buttonplace').html('<button type="New" class="btn btn-xs btnbg btncls btn-default" data-toggle="modal" data-target="#myModal">New Client</button>');
+    console.log( "ready!" );
+});
 $("body").on("click","#edit-submit",function(){
 		var id=$('#edit-id').val();
 		var orgname=$('#edit-orgname').val();

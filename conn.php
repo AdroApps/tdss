@@ -26,7 +26,7 @@ if (!isset($_SESSION['created'])) {
     //session_regenerate_id(true);    // change session ID for the current session and invalidate old session ID
     session_destroy();
     $_SESSION['created'] = time();  // update creation time
-     header('Location: clientlogin.php');
+     header('Location: index.php');
      exit;
 }
 /*function session_set()

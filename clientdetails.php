@@ -57,7 +57,9 @@ while($row = mysqli_fetch_array($data2)) {
     }
 	$totaltdsamount = $tdsamount1tot + $tdsamount2tot + $tdsamount3tot+$service;
 	
-?>  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+?>  
+<input type="hidden" id="quarter_id" value="<?php echo $quarter;?>"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  
   <script src="js/jquery.dataTables.min.js"></script>
   <script src="js/dataTables.bootstrap.min.js"></script>
@@ -180,8 +182,8 @@ if(isset($_POST['filesubmit'])) {
      
 <table class="table table-hover table-condensed" id="user_data">
  <thead>
-      <tr>
-      <th>Employee Fullname</th>
+             <tr>
+                <th>Employee Fullname</th>
 				<th width="5%">Pan Number</th>
 				<th width="5%">Month 1</th>
 				<th width="5%">salary</th>
@@ -191,17 +193,34 @@ if(isset($_POST['filesubmit'])) {
 				<th width="5%">TDS amount</th>
 				<th width="5%">Month 3</th>
 				<th width="5%">salary</th>
-				<th width="5%">TDS amount</th>
-		
-       <th>Delete</th>
-      </tr>
+				<th width="5%">TDS amount</th>		
+                <th>Delete</th>
+             </tr>
      </thead>
 
 	</table>
 </div>
 </div>
 <!--/Employee table-->
+<?php
+$psql="select pan,employeename from employeetable where userid=".$_SESSION['user_id'];
 
+$pan_res = mysqli_query($conn, $psql);
+$panos=array();
+while($row = mysqli_fetch_array($pan_res)) {
+$panos[$row['employeename']]=$row['pan'];
+//	array_push($panos, $row['pan']);
+	//$pannos=implode(',',$panos);
+}$object = new stdClass();
+
+foreach ($panos as $key => $value)
+{
+    $object->$key = $value;
+}
+$object = json_decode(json_encode($array), FALSE);
+
+?>
+<input type="hidden" id="pannos" value='<?php echo json_encode($panos);?>'/>
 
 <!-----Attach File form and Table--->
 	<div class="col-lg-12">
@@ -288,7 +307,8 @@ if(isset($_POST['filesubmit'])) {
 
 <script type="text/javascript" language="javascript" >
  $(document).ready(function(){
-  
+
+//s.appendTo('body');
   fetch_data();
 
   function fetch_data()
@@ -332,27 +352,69 @@ if(isset($_POST['filesubmit'])) {
   });
   
   $('#add').click(function(){
+	  var p=JSON.parse($('#pannos').val());
+console.log(p);
+var s = $('<select />').attr('id','panid').attr('class','form-control');
+
+ for (var key in p) {
+      if (p.hasOwnProperty(key)) {
+        console.log(key + " -> " + p[key]);
+		  var panop=$('<option />', {value: p[key], text: p[key]}).attr('id',key);
+		    panop.appendTo(s);
+      }
+    }
+	  var temp = new Array();
+// this will return an array with strings "1", "2", etc.
+//temp = pannos.split(",");
+console.log(s);
+	  var month1,month2,month3;
+	  var quarter=$('#quarter_id').val();
+	  if(quarter == "Q1") {
+		month1 = "January";
+		month2 = "Febuary";
+		month3 = "March";
+    } else if(quarter == "Q2") {
+		month1 = "April";
+		month2 = "May";
+		month3 = "June";
+    } else if(quarter == "Q3") {
+		month1 = "July";
+		month2 = "August";
+		month3 = "September";
+    } else {
+		month1 = "October";
+		month2 = "November";
+		month3 = "December";
+    }
    var html = '<tr>';
    html += '<td width="5%" contenteditable id="data1"></td>';
    html += '<td width="5%" contenteditable id="data2"></td>';
-    html += '<td width="5%" contenteditable id="data3"></td>';
+    html += '<td width="5%" contenteditable id="data3">'+month1+'</td>';
    html += '<td width="5%" contenteditable id="data4"></td>';
     html += '<td  width="5%" contenteditable id="data5"></td>';
-   html += '<td width="5%" contenteditable id="data6"></td>';
+   html += '<td width="5%" contenteditable id="data6">'+month2+'</td>';
     html += '<td width="5%" contenteditable id="data7"></td>';
    html += '<td width="5%" contenteditable id="data8"></td>';
-    html += '<td width="5%" contenteditable id="data9"></td>';
+    html += '<td width="5%" contenteditable id="data9">'+month3+'</td>';
    html += '<td width="5%" contenteditable id="data10"></td>';
     html += '<td width="5%" contenteditable id="data11"></td>';
    html += '<td><button type="button" name="insert" id="insert" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></td>';
    html += '<td></td>';
    html += '</tr>';
    $('#user_data tbody').prepend(html);
+   $('#data2').append(s);
   });
-  
+
+$(document).on('change','#panid',function(){
+ $tr = $(this).parent().parent();
+	   console.log($tr);
+  var id = $(this).children(":selected").attr("id");
+  alert(id);
+  $('td#data1', $tr).text(id);
+});
   $(document).on('click', '#insert', function(){
    var first_name = $('#data1').text();
-   var pno = $('#data2').text();
+   var pno = $('#data2 option:selected').text();
    var month1 = $('#data3').text();
    var sal1 = $('#data4').text();
    var tdsamt1 = $('#data5').text();

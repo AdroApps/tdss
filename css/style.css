@@ -30,16 +30,16 @@
 .newpanel{margin: 4px 2%;}
 .newpanel h3{padding-top:1%}
 .btncls,.btncls:hover{
-    background-color: #273246!important;
-	    position: absolute!important;
+       background-color: #273246!important;
     right: 0px;
-    z-index: 99999;
-    top: 7%;
-    border-radius: 5px;
+    top: 35%;
+    border-radius: 5px!important;
     right: 2%;
     background: #273246;
     color: white!important;
     text-transform: uppercase!important;
+    margin-top: -3%!important;
+    padding: 4px 18px!important;
 }
 .btnbg,.btnbg:hover{
 	background-color: #273246!important;

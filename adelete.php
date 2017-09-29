@@ -1,17 +1,17 @@
 <?php
 include_once "conn.php";
 //session_set();
-if(isset($_GET['delete'])) {
-	$id = $_GET['delete'];
+
+	$id = $_POST['id'];
 	$sql = "DELETE FROM `addemployee` WHERE `id` = '".$id."'";
 	$data = mysqli_query($conn, $sql);
-	$row = mysqli_fetch_array($data);
-	if($data) {
-		header('Location:addemployee.php');
-	}
-	else {
-		echo "not";
-	}
-}
+	  if($data) {
+    $status='success';
+   }
+   else {
+     $status='failure';
+   }
+  
+   echo json_encode([$status]);
 ?>
 

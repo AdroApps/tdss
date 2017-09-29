@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2017 at 08:00 AM
+-- Generation Time: Sep 29, 2017 at 04:42 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -31,19 +31,43 @@ CREATE TABLE `addemployee` (
   `userid` int(11) NOT NULL,
   `employeename` varchar(30) NOT NULL,
   `pan` varchar(15) NOT NULL,
-  `adhar` varchar(30) NOT NULL
+  `adhar` varchar(30) NOT NULL,
+  `orgid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `addemployee`
 --
 
-INSERT INTO `addemployee` (`id`, `userid`, `employeename`, `pan`, `adhar`) VALUES
-(3, 14, 'ananda', 'lalitha', 'sfd'),
-(4, 14, 'dsfdfs', 'ddfdfs', 'sfdsdfds'),
-(5, 14, 'dsf', 'ddf', 'sfd'),
-(6, 14, 'dsf', 'ddf', 'sfd'),
-(7, 14, 'dsf', 'ddf', 'sfd');
+INSERT INTO `addemployee` (`id`, `userid`, `employeename`, `pan`, `adhar`, `orgid`) VALUES
+(13, 14, 'fdgdfgdg', 'x3df34c23f', 'dfg4gdf654b54f4f', 14),
+(14, 14, 'fgd', 'fdfgd4', 'gd', 14),
+(15, 14, 'sdf', 'dsf', 'sfs', 14),
+(16, 14, 'sdf', 'dfs', 'sdf', 14),
+(17, 14, 'sdf', 'dfs', 'sdf', 14),
+(18, 14, 'sdf', 'dfs', 'sdf', 14),
+(19, 14, 'sdfsdfsdfsd', 'dfsdfds3sd', 'dfsdfdsfsdfsdfsd', 14),
+(20, 14, 'dfdsf', 'dfs3dsdfsd', 'sdsddfsdfdsfdsfd', 14),
+(21, 14, 'dfsdfsdf', 'dsdf3fsdfs', 'dfdfsdfsdfdsfsdf', 14),
+(22, 2, 'fdgdfgdg', 'x3df34c23f', 'dfg4gdf654b54f4f', 14),
+(23, 2, 'dfd', 'reer', 'reterdfsdfdsfsfs', 14),
+(24, 2, 'dfd', 'reer', 'reterdfsdfdsfsfs', 14),
+(25, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(26, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(27, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(28, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(29, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(30, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(31, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(32, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(33, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(34, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(35, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(36, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(37, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(38, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(40, 2, 'erter', 'reerjhjhjh', 'reter', 14),
+(42, 2, 'erter', 'reerjhjhjh', 'reter', 14);
 
 -- --------------------------------------------------------
 
@@ -155,8 +179,6 @@ INSERT INTO `clienttable` (`id`, `organization`, `tan`, `year`, `quarter`, `stat
 (89, 'yamini', 'uvkvv', '----Financial Y', '--------Qu', '--------Status-', '', '', 0, '2017/09/12', ''),
 (90, 'yaminii', 'ghcnc', '2017-2018', 'Q4', 'Processing', 'mee', 'me@gmail.com', 1234567890, '2017/09/12', '200'),
 (91, 'yaminii', 'ghcnc', '2017-2018', 'Q4', 'Processing', 'mee', 'me@gmail.com', 1234567890, '2017/09/12', '200'),
-(92, 'Finance', 'jh14241', '2017-2018', '', '', 'samm', 'finance@gmail.com', 1234567890, '2017/09/14', '300'),
-(93, 'Finance', 'jh14241', '----Financial Y', '--------Qu', '--------Status-', 'samm', 'finance@gmail.com', 1234567890, '2017/09/14', '300'),
 (94, 'Finance', 'jh14241', '2017-2018', 'Q1', 'Completed', 'samm', 'finance@gmail.com', 1234567890, '2017/09/14', '300'),
 (95, 'Finance', 'jh14241', '2017-2018', 'Q1', 'Processing', 'samm', 'finance@gmail.com', 1234567890, '2017/09/14', '300'),
 (96, 'Finance', 'jh14241', '2017-2018', 'Q1', 'Processing', 'samm', 'finance@gmail.com', 1234567890, '2017/09/14', '300'),
@@ -196,11 +218,10 @@ CREATE TABLE `employeetable` (
 --
 
 INSERT INTO `employeetable` (`id`, `employeename`, `pan`, `adhar`, `month1`, `salary1`, `tdsamount1`, `month2`, `salary2`, `tdsamount2`, `month3`, `salary3`, `tdsamount3`, `quarter`, `created_date`, `userid`, `qid`) VALUES
-(4, 'sdas', 'sadsa', '', 'dasd', 'jk', 'fgf', 'fhgf', 'hfgh', 'fhfhg', 'gfh', 'f', 'hf', '', '2017-09-28 07:36:14', 14, 0),
-(5, 'sdas', 'sad', '', 'ssdas', 'dsa', 'sad', 'dasd', 'das', 'ds', 'asd', 'daas', 'sada', '', '2017-09-28 07:37:19', 14, 0),
-(6, 'dfd', 'df', '', 'sfds', 'sdf', 'dsf', 'dsfds', 'fsd', 'fdsf', 'dsf', 'sds', 'fs', '', '2017-09-28 07:38:51', 14, 0),
 (7, 'dfds', 'fsd', '', 'fsd', 'sdffsdf', 'dsf', 'ds', 'sdffdsf', 'dsfs', 'dfds', 'fdsf', 'df', '', '2017-09-28 07:40:17', 14, 92),
-(8, 'sdsa', 'sd', '', 'sd', 'asd', 'sdas', 'as', 'sd', 'sdas', 'ds', 'd', 'asda', '', '2017-09-28 07:58:51', 14, 93);
+(8, 'sdsa', 'sd', '', 'sd', 'asd', 'sdas', 'as', 'sd', 'sdas', 'ds', 'd', 'asda', '', '2017-09-28 07:58:51', 14, 93),
+(9, 'dfd', 'saddffsdsd', '', 'October', '4343', '344', 'November', '4334', '545', 'December', '875', '33', '', '2017-09-28 11:59:20', 14, 93),
+(10, 'dfds', 'fsd', '', 'October', '232', '23', 'November', '23423', '223', 'December', '3434', '23', '', '2017-09-29 12:07:13', 14, 93);
 
 -- --------------------------------------------------------
 
@@ -303,19 +324,8 @@ CREATE TABLE `usercreate` (
 --
 
 INSERT INTO `usercreate` (`id`, `organization`, `email`, `password`, `pname`, `number`, `tan`, `city`, `area`, `service`, `username`, `userid`) VALUES
-(7, 'yaminii', 'yamini.adigarla@gmail.com', 'yaminiyamini', '', 1234, '', '', '', '', 'ram', 0),
-(9, 'yaminii', 'yamini.adigarla@gmail.com', 'yaminiyamini', '', 2147483647, '', '', '', '', 'me', 0),
-(11, 'testcase1', 'testcase@gmail.com', 'fsvrvrwvwrv', '', 214748364, '', '', '', '', 'kushi', 0),
-(14, 'Finance', 'finance@gmail.com', 'finance', 'samm', 1234567890, 'jh14241', 'hyderabad', 'Banjara Hills', '300', 'ram', 0),
-(16, 'paradise', 'paradise@gmail.com', 'paradise', 'anusha', 1234567890, 'hb2343', 'hyderabad', 'madhapur', '200', 'me', 0),
-(23, 'Engineer', 'engineer@gmail.com', 'engineer', 'riya', 2147483647, 'jh7666666', 'hyderabad', 'kondapur', '300', 'kushi', 0),
-(24, 'testcase1', 'testcase@gmail.com', 'fsvrvrwvwrv', '', 214748364, '', '', '', '', 'kushi', 0),
-(25, 'reyrr', 'sam@gmail.com', 'yaminiyamini', 'jvj', 32556547, 'nbv32565', 'hyderabad', 'madhapur', '200', 'ram', 0),
-(26, 'reyrr', 'sam@gmail.com', 'yaminiyamini', 'jvj', 32556547, 'nbv32565', 'hyderabad', 'madhapur', '200', 'ram', 0),
-(27, 'test', 'test@gmail.com', 'testing', 'tester', 1234545, 'dsfsdf', 'dfdsf', 'ffd', '15', '', 2),
-(28, 'test', 'test@gmail.com', 'testing', 'tester', 1234545, 'dsfsdf', 'dfdsf', 'ffd', '15', '', 2),
-(29, 'test', 'test@gmail.com', 'testing', 'tester', 1234545, 'dsfsdf', 'dfdsf', 'ffd', '15', '', 2),
-(30, 'test', 'test@gmail.com', 'testing', 'tester', 1234545, 'dsfsdf', 'dfdsf', 'ffd', '15', '', 2);
+(14, 'Finance', 'finance@gmail.com', 'finance', 'samm', 1234567890, 'jh14241', 'hyderabad', 'Banjara Hills', '300', 'ram', 2),
+(27, 'test', 'test@gmail.com', 'test', 'tester', 1234545, 'dsfsdf', 'dfdsf', 'ffd', '15', '', 2);
 
 --
 -- Indexes for dumped tables
@@ -377,7 +387,7 @@ ALTER TABLE `usercreate`
 -- AUTO_INCREMENT for table `addemployee`
 --
 ALTER TABLE `addemployee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `admincreate`
 --
@@ -392,7 +402,7 @@ ALTER TABLE `clienttable`
 -- AUTO_INCREMENT for table `employeetable`
 --
 ALTER TABLE `employeetable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `fileuploads`
 --

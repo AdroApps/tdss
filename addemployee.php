@@ -1,39 +1,8 @@
 <?php
 include_once "conn.php";
 include_once "header.php";
-if(isset($_POST['ename']))   {
-	$ename = $_POST['ename'];
-	$pan = $_POST['number'];
-	$adhar = $_POST['num'];
-
-	$sql = "INSERT INTO `addemployee`(`employeename` , `pan` ,`adhar`,`userid`,`orgid`) VALUES ('".$ename."' , '".$pan."' , '".$adhar."','".$_SESSION['user_id']."','".$_SESSION['user_id']."')";  
-
-	$data  = mysqli_query($conn,$sql);
-	
-	if($data)
-	{
-		$txt= 'moved database' ;
-	}
-	else
-	{
-		$txt =  'not moved'.mysqli_error($conn);
-	}
-  }
-  $sql1 = "SELECT * FROM `addemployee` WHERE userid=".$_SESSION['user_id'];
-  $data1 = mysqli_query($conn, $sql1);
- 
-	if($data1)
-	{
-		echo '' ;
-	}
-	else
-	{
-		echo 'not moved'.mysqli_error($conn);
-	}
-  
 ?>
 
-<button type="New" class="btn btn-xs btncls btn-default" data-toggle="modal" data-target="#myModal">New Employee</button>
 	
 
 <div class="panel panel-flat panelflat newpanel">
@@ -57,7 +26,17 @@ if(isset($_POST['ename']))   {
 	
 		<tbody>
 			<?php
-				
+				$sql1 = "SELECT * FROM `addemployee` WHERE userid='".$_SESSION['user_id']."' ORDER BY id DESC ";
+  $data1 = mysqli_query($conn, $sql1);
+ 
+	if($data1)
+	{
+		echo '' ;
+	}
+	else
+	{
+		echo 'not moved'.mysqli_error($conn);
+	}
 				while($row = mysqli_fetch_array($data1)){
 					
 					echo "<tr id=".$row[0].">
@@ -102,16 +81,16 @@ if(isset($_POST['ename']))   {
       <div class="modal-body">
         <form action="" method="POST">
 			<div class="form-group">
-				<input type="text" class ="form-control" id="pan" name="number" Placeholder="Enter Pan Number">
+				<input type="text" class ="form-control" id="pan" name="number" maxlength="10" Placeholder="Enter Pan Number">
 			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" id="name" name="ename" Placeholder="Enter Employee FullName">
 			</div>
 			<div class="form-group">
-				<input type="text" class ="form-control" id="adhar" name="num" Placeholder="Enter Adhar Number">
+				<input type="text" class ="form-control" id="adhar" name="num"  maxlength="16" Placeholder="Enter Adhar Number">
 			</div>
 			
-		<input type="submit" value="submit"  class="btn btn-md btn-primary">
+		<input type="button" id="add-button" value="submit"  class="btnbg btn btn-md btn-primary">
 	</form>
 	</div>
 	</div>
@@ -155,15 +134,49 @@ if(isset($_POST['ename']))   {
 <!---modal--->
 
 <script>
-var url = "http://localhost/tds_cleaned/";
+$( document ).ready(function() {
+	$('#buttonplace').html('<button type="New" class="btn btn-xs btncls btn-default" data-toggle="modal" data-target="#myModal">New Employee</button>');
+    console.log( "ready!" );
+});
+$("body").on("click","#add-button",function(){
+	var name= $('#name').val();
+		var number=$('#pan').val();
+		 var adhar=$('#adhar').val();
+		var reg = /[^A-Za-z0-9]/;		
+if(number.length!=10 || reg.test(number)){
+	alert('Invalid Pan card Number');
+}
 
+else if(adhar.length!=16){
+	alert('Invalid Aadhar Number');
+}
+else{
+		$.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'ainsert.php',
+        data:{pan:number,name:name,adhar:adhar}
+    }).done(function(data){       
+        alert('Record Inserted Successfully.');
+		$('#myModal').modal('hide');
+        location.reload();
+    });
+}
+});
 $("body").on("click","#edit-submit",function(){
+	alert(45);
 		var id=$('#edit-id').val();
 		var name= $('#edit-name').val();
 		var number=$('#edit-pan').val();
 		 var adhar=$('#edit-adhar').val();
-
-		$.ajax({
+if(number.length<10){
+	alert('Invalid Pan card Number');
+}
+else if(adhar.length<16){
+	alert('Invalid Aadhar Number');
+}
+else{
+	$.ajax({
         dataType: 'json',
         type:'POST',
         url: url+'aedit.php',
@@ -173,7 +186,8 @@ $("body").on("click","#edit-submit",function(){
 		$('#myEmployeeModal').modal('hide');
         location.reload();
     });
-	
+
+}	
 });
  $("body").on("click",".edit_addemployee",function(){
       var $tr = $(this).closest('tr');

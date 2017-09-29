@@ -62,9 +62,7 @@ $data2 = mysqli_query($conn , $sql2);
 ?>
 
 <!--page header-->
-	<button type="New" class="btn btn-xs btncls  btn-default" data-toggle="modal" data-target="#myModal">New</button>
-						
-
+	
 <!--page header-->
 <!--Client Table-->
 <div class="panel panel-flat panelflat newpanel">
@@ -178,7 +176,7 @@ $data2 = mysqli_query($conn , $sql2);
 			</div>
 			<div class="form-group">
 				<select id="year" name="year" class="form-control">
-					<option>----Financial Year----</option>
+					<option>Select Financial Year</option>
 					<option>2017-2018</option>
 					<option>2016-2017</option>
 					<option>2015-2016</option>
@@ -187,20 +185,20 @@ $data2 = mysqli_query($conn , $sql2);
 			</div>
 			<div class="form-group">
 				<select  id="quarter" name="quarter" class="form-control">
-					<option>--------Quarter---------</option>
+					<option>Select Quarter</option>
 					<option>Q1</option>
 					<option>Q2</option>
 					<option>Q3</option>
 					<option>Q4</option>
 				</select>
 			</div>
-			<div class="form-group">
+			<!--<div class="form-group">
 				<select  id="status" name="status" class="form-control">
-					<option>--------Status----------</option>
+					<option>SelectStatus----------</option>
 					<option>Processing</option>
 					<option>Completed</option>
 				</select>
-			</div>
+			</div>-->
 			<div class="form-group">
 				<input type="text" class="form-control" id="pname" name="personname" value="<?php echo $pname;?>" Placeholder="Enter Authorised Person Name">
 			</div>
@@ -290,6 +288,11 @@ $data2 = mysqli_query($conn , $sql2);
 
 <script>
 
+						
+$( document ).ready(function() {
+	$('#buttonplace').html('<button type="New" class="btn btn-xs btncls  btn-default" data-toggle="modal" data-target="#myModal">New</button>');
+    console.log( "ready!" );
+});
 $("body").on("click","#edit-submit",function(){ 
 		var year=$('#edit-year').val();
        var number= $('#edit-number').val();

@@ -13,7 +13,7 @@ function active($currect_page){
 <html>
 <head>
 <script>
-var url = "http://localhost:8080/tdss/";
+var url = "http://localhost/tdsgit/tdss/";
 </script>
 <title>client addemployee table</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -56,9 +56,9 @@ var url = "http://localhost:8080/tdss/";
 		<div class="navbar-collapse collapse" id="navbar-first">
 			<ul class="nav navbar-nav navbar-right">
 				
-				<li class="dropdown dropdown-user">
+				<li class="dropdown dropdown-user" id="user-menu">
 					<a class="dropdown-toggle" data-toggle="dropdown">
-						<img class="main_nav_img" src="assets/images/placeholder.jpg" alt="">
+						<span class="glyphicon glyphicon-user" style="font-size: 21px;right: 10px;"></span>
 						<span><?php echo $_SESSION['org'];?></span>
 						<i class="caret"></i>
 					</a> 
@@ -68,11 +68,8 @@ var url = "http://localhost:8080/tdss/";
 						<li><a href="#"><span class="badge badge-warning pull-right"></span> <i class="icon-comment-discussion"></i> Messages</a></li>
 						<li class="divider"></li>
 						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-						<?php if( $_SESSION['type']=='user'){?>
-						<li><a href="clientlogout.php"><i class="icon-switch2"></i> Logout</a></li>
-						<?php }if( $_SESSION['type']=='admin'){?>
-						<li><a href="adminlogout.php"><i class="icon-switch2"></i> Logout</a></li>
-						<?php }?>
+						<li><a href="logout.php"><i class="icon-switch2"></i> Logout</a></li>
+						
 					</ul>
 				</li>
 			</ul>
@@ -90,10 +87,10 @@ var url = "http://localhost:8080/tdss/";
 <!--client menu-->
 		<div class="navbar-collapse collapse" id="navbar-second-toggle">
 			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
-				<li class="<?php active('');?>"><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
+				<!--<li class="<?php //active('');?>"><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>-->
 				<li class="<?php active('clienttable.php');?>"><a href="clienttable.php"><i class="icon-puzzle4 position-left"></i> TDS</a></li>
 				<!--<li class=""><a href="employeetable.php"><i class="icon-puzzle4 position-left"></i>Employee</a></li-->
-				<li class="<?php active('addemployee.php');?>"><a href="addemployee.php"><i class="icon-puzzle4 position-left"></i>AddEmployee</a></li>
+				<li class="<?php active('addemployee.php');?>"><a href="addemployee.php"><i class="icon-puzzle4 position-left"></i>Employees</a></li>
 			</ul>
 			<!--page header-->
 						
@@ -108,11 +105,12 @@ var url = "http://localhost:8080/tdss/";
 				<li class=""><a href=""><i class="icon-display4 position-left"></i> Dashboard</a></li>
 				<!--li class=""><a href="usercreate.php"><i class="icon-puzzle4 position-left"></i>AddUser</a></li-->
 				<li class="<?php active('usertable.php');?>"><a href="usertable.php"><i class="icon-puzzle4 position-left"></i>Clients</a></li>
-				<li class="<?php active('adminaddemployee.php');?>"><a href="adminaddemployee.php"><i class="icon-puzzle4 position-left"></i>New Employee</a></li>
+				<li class="<?php active('adminaddemployee.php');?>"><a href="adminaddemployee.php"><i class="icon-puzzle4 position-left"></i>Employees</a></li>
 				
 			</ul>
 		</div>
 <?php }?>
+<div id="buttonplace"></div>
 	</div>
 </div>
 <!-- /second navbar -->
