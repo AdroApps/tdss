@@ -20,6 +20,7 @@ while($row = mysqli_fetch_assoc($data)) {
 	$mail = $row['email'];
 	$number = $row['number'];
 	$service = $row['service'];//.mysqli_error($conn);
+	
 }
 //echo "quattttttttttttttttt";
 //echo $quat;
@@ -31,9 +32,9 @@ $sql1 = "SELECT * FROM `clienttable` WHERE `quarter` = '".$quarter."' AND `organ
 
 $data1= mysqli_query($conn,$sql1);
 $data2= mysqli_query($conn,$sql1);
-
-while($row = mysqli_fetch_array($data2)) {
-	
+$sql_data = "SELECT * FROM `employeetable` WHERE `qid` = '".$id."'  ";
+$sql_res= mysqli_query($conn,$sql_data);
+while($row = mysqli_fetch_array($sql_res)) {
 	$tdsamount1tot += $row['tdsamount1'];
 	$tdsamount2tot += $row['tdsamount2'];
 	$tdsamount3tot += $row['tdsamount3'];
@@ -397,6 +398,7 @@ $(document).on('change','#panid',function(){
       $('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
       $('#user_data').DataTable().destroy();
       fetch_data();
+	  location.reload();
      }
     });
     setInterval(function(){
