@@ -3,6 +3,7 @@ include_once "conn.php";
 include_once "header.php";
 //session_set();
 $id = $_GET['clientdetails'];
+$_SESSION['qid'] = $_GET['clientdetails'];
 $quarter ="";
 $sql = "SELECT * From `clienttable` WHERE `id` = '".$id."' ";
 $data= mysqli_query($conn,$sql);
@@ -21,13 +22,12 @@ while($row = mysqli_fetch_assoc($data)) {
 	$number = $row['number'];
 	$service = $row['service'];//.mysqli_error($conn);
 }
-//echo "quattttttttttttttttt";
-//echo $quat;
+
 $tdsamount1tot = "";
 $tdsamount2tot = "";
 $tdsamount3tot = "";
 
-$sql1 = "SELECT * FROM `employeetable` WHERE `qid` = '".$id."' AND `userid` = '".$_SESSION['user_id']."' ";
+$sql1 = "SELECT * FROM `employeetable` WHERE `qid` = '".$id."'  ";
 $data1= mysqli_query($conn,$sql1);
 $data2= mysqli_query($conn,$sql1);
 
@@ -60,7 +60,7 @@ while($row = mysqli_fetch_array($data2)) {
 ?>
 <?php
 include_once "conn.php";
-$sql4 = "SELECT * FROM `fileuploads` WHERE userid=".$id." ORDER BY date DESC ";
+$sql4 = "SELECT * FROM `fileuploads` WHERE qid=".$id." ORDER BY date DESC ";
 $data4 = mysqli_query($conn, $sql4);
 			
 if(isset($_POST['filesubmit'])) {
@@ -78,15 +78,15 @@ if(isset($_POST['filesubmit'])) {
 		//$created = $time;
 		if ($_FILES['file_url']['error'] !== UPLOAD_ERR_OK) {
 			die("upload failedwith error code" . $_FILES['file_url']['error']);
-			echo "error";
+			$txt= "error";
 		}
 		if (move_uploaded_file($fileTmpLoc, $store)) {
 			//$path = "http://localhost:8080/tds/fileuploads/$filename";
 			
-			$sql3 = "INSERT into `fileuploads`(`file` , `date` , `userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
+			$sql3 = "INSERT into `fileuploads`(`file` , `date` , `userid`,`qid`) VALUES ('".$filename."' , '".$date."','".$_SESSION['user_id']."','".$id."')";
 			$data3 = mysqli_query($conn, $sql3);
 			if($data3) {
-				echo "success";
+				$txt= "success";
 			}
 			else {
 				  $txt = "not".mysqli_error($conn);
@@ -198,7 +198,7 @@ $data2 = mysqli_query($conn , $sql2);
 	<!--/employee table header-->		
 		<!--Employee table-->
 	<div class="col-lg-12">
-	<div class ="panel panel-flat" style="margin-top:5px"> 
+	<div class ="panel panel-flat newpanel" style="margin-top:5px"> 
 		<div class="table-responsive pre-scrollable">
 
 		<table class="table table-hover table-condensed">
@@ -265,13 +265,13 @@ $data2 = mysqli_query($conn , $sql2);
 <!--Employee table-->
 
 <!-----Attach file form---->
-<form action="" method="post" enctype="multipart/form-data">
-			<center><div style="position:relative">
-                            <a class="btn btn-sm btn-default" href="javascript:;" style="margin-bottom:30px">
+<form action="" method="post" id="file-upload" name="file-upload" enctype="multipart/form-data">
+			<center><div >
+                            <a class="btn btn-sm btn-default" href="javascript:;" style="    background: #ffffff;margin-bottom:30px">
                                 <input type="file" name="file_url">
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
-                            <input type="submit"  class="btn btn-sm btn-default" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
+                            <input type="submit"  class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
              </div>
             				
 </form>
@@ -312,15 +312,19 @@ $data2 = mysqli_query($conn , $sql2);
 					?>
 					
 					<tr>
-					<td><?php echo $roww[1]?></td>
+					<td><?php echo $roww[2]?></td>
 					
-					<td><a href="<?php echo $url.$roww[1];?>" target="_blank">View</a></td>
+					<td><a href="<?php echo $url.$roww[2];?>" target="_blank">View</a></td>
 					
-					<td><a href="<?php echo $url.$roww[1];?>" download>Download</a></td>
+					<td><a href="<?php echo $url.$roww[2];?>" download>Download</a></td>
 					<?php echo
-					"<td>".$roww[2]."</td>";
-					
-					"</tr>";
+					"<td>".$roww[3]."</td>";
+					echo "<td width='10%' >
+						<a class='btn btn-xs btnbg remove-image' id='$roww[0],$roww[2]' >
+							<span class='glyphicon glyphicon-trash'></span>
+						</a>
+					</td>";
+					echo "</tr>";
 				}
 				?>
 				
@@ -359,6 +363,43 @@ $(document).ready(function() {
           });
     });
 });
+ $("body").on("click",".remove-image",function(){
+    var id = $(this).attr('id');
+    var c_obj = $(this).parent().parent();
+	console.log(c_obj);
+   var r = confirm("Are you sure you want to delete this?");
+    if (r == true) {
+    $.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'fileupload.php',
+        data:{id:id,type:'delete'},
+    }).done(function(data){
+        c_obj.remove();
+        alert('File Deleted Successfully.');
+       location.reload();
+    });
+ }
+
+});
+ $('#file-upload').submit( function(e) {
+    e.preventDefault();
+
+    var data = new FormData(this); // <-- 'this' is your form element
+    
+		$.ajax({
+        type:'POST',
+        url: url+'fileupload.php',        
+		data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+      }).done(function(data){       
+        alert('File uploaded Successfully.');
+		location.reload();
+    });
+
+	});
 </script>
 
 </body>

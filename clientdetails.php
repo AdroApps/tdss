@@ -3,6 +3,7 @@ include_once "conn.php";
 include_once "header.php";
 //session_set();
 $id = $_GET['clientdetails'];
+$_SESSION['qid'] = $_GET['clientdetails'];
 $sql = "SELECT * From `clienttable` WHERE `id` = '".$id."' ";
 $data= mysqli_query($conn,$sql);
 $quat;
@@ -68,43 +69,10 @@ while($row = mysqli_fetch_array($data2)) {
 	
 <?php
 
-$sql4 = "SELECT * FROM `fileuploads` WHERE userid=".$id." ORDER BY date DESC";
+$sql4 = "SELECT * FROM `fileuploads` WHERE userid=".$_SESSION['user_id']." AND qid=".$_GET['clientdetails']." ORDER BY date DESC";
 $data4 = mysqli_query($conn, $sql4);
 			
-if(isset($_POST['filesubmit'])) {
-	$date = date("Y/m/d h:i:s");
 
-    //$email = $_POST['email'];
-    if(!empty($_FILES['file_url']['name'])) {
-		$filename = $_FILES['file_url']['name'];
-		$fileTmpLoc = $_FILES['file_url']['tmp_name'];
-		$fileType = $_FILES['file_url']['type'];
-		$filesize = $_FILES['file_url']['size'];
-		$fileErrorMsg = $_FILES['file_url']['error'];
-		$store = "fileuploads/" . $filename;
-		//$time = date("Y-m-d")."-".time();
-		//$created = $time;
-		if ($_FILES['file_url']['error'] !== UPLOAD_ERR_OK) {
-			die("upload failedwith error code" . $_FILES['file_url']['error']);
-			echo "error";
-		}
-		if (move_uploaded_file($fileTmpLoc, $store)) {
-			//$path = "http://localhost:8080/tds/fileuploads/$filename";
-			//echo $path;
-			$sql3 = "INSERT into `fileuploads`(`file` , `date` , `userid`) VALUES ('".$filename."' , '".$date."','".$id."')";
-			$data3 = mysqli_query($conn, $sql3);
-			if($data3) {
-				$txt = "success";
-			}
-			else {
-				 $txt= "not".mysqli_error($conn);
-			 }
-		}
-	} else {
-		$path = "";
-		
-	}
-}
 	?>
 
 		<!-- Client details -->
@@ -224,13 +192,13 @@ $object = json_decode(json_encode($array), FALSE);
 
 <!-----Attach File form and Table--->
 	<div class="col-lg-12">
-		<form action="" method="post" enctype="multipart/form-data">
+		<form action="" method="post" id="file-upload" name="file-upload" enctype="multipart/form-data">
 			<center><div style="position:relative">
                             <a class="btn btn-sm btn-default" href="javascript:;" style="margin-bottom:30px">
-                                <input type="file" name="file_url">
+                                <input type="file" name="file_url" >
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
-                            <input type="submit"  class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
+                            <input type="submit" id="file-upload"  class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
              </div>
             				
 		</form>
@@ -252,18 +220,7 @@ $object = json_decode(json_encode($array), FALSE);
  <table class="table table-hover table-condensed">
 
 				<tbody>
-				<!--?php
-				while($roww = mysqli_fetch_array($data4)){
-					
-					
-					echo "<tr>
-					<td><a href=''>".$roww[1]."</a></td>";
-					echo
-					"<td>".$roww[2]."</td>";
-					
-					"</tr>";
-				}
-				?-->
+			
 				<?php
 				 $currentPath = $_SERVER['PHP_SELF']; 
 
@@ -283,16 +240,20 @@ $object = json_decode(json_encode($array), FALSE);
 				 
 				 ?>
 				 
-				 <tr>
-				 <td width="25.5%"><?php echo $roww[3]?></td>
+				 <tr >
+				 <td width="25.5%"><?php echo $roww[2]?></td>
 				 
-				 <td width="25.5%"><a href="<?php echo $url.$roww[3];?>" target="_blank">View</a></td>
+				 <td width="25.5%"><a href="<?php echo $url.$roww[2];?>" target="_blank">View</a></td>
 				 
-				 <td width="25.5%"><a href="<?php echo $url.$roww[3];?>" download>Download</a></td>
+				 <td width="25.5%"><a href="<?php echo $url.$roww[2];?>" download>Download</a></td>
 				 <?php echo
-				 "<td>".$roww[4]."</td>";
-				 
-				 "</tr>";
+				 "<td>".$roww[3]."</td>";
+				 echo "<td width='10%' >
+						<a class='btn btn-xs btnbg remove-image' id='$roww[0],$roww[2]' >
+							<span class='glyphicon glyphicon-trash'></span>
+						</a>
+					</td>";
+				 echo "</tr>";
 				}
 			$_SESSION['clientdetails']=$_GET['clientdetails'];	?>
 				
@@ -447,7 +408,7 @@ $(document).on('change','#panid',function(){
     alert("Both Fields is required");
    }
   });
-  
+ 
   $(document).on('click', '.delete', function(){
    var id = $(this).attr("id");
    if(confirm("Are you sure you want to remove this?"))
@@ -469,6 +430,43 @@ $(document).on('change','#panid',function(){
   });
   $("#user_data").css("width","100%");
  });
+ $("body").on("click",".remove-image",function(){
+    var id = $(this).attr('id');
+    var c_obj = $(this).parent().parent();
+	console.log(c_obj);
+   var r = confirm("Are you sure you want to delete this?");
+    if (r == true) {
+    $.ajax({
+        dataType: 'json',
+        type:'POST',
+        url: url+'fileupload.php',
+        data:{id:id,type:'delete'},
+    }).done(function(data){
+        c_obj.remove();
+        alert('File Deleted Successfully.');
+       location.reload();
+    });
+ }
+
+});
+ $('#file-upload').submit( function(e) {
+    e.preventDefault();
+
+    var data = new FormData(this); // <-- 'this' is your form element
+    
+		$.ajax({
+        type:'POST',
+        url: url+'fileupload.php',        
+		data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+      }).done(function(data){       
+        alert('File uploaded Successfully.');
+		location.reload();
+    });
+
+	});
 </script>
 
 

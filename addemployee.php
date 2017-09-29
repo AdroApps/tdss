@@ -164,7 +164,7 @@ else{
 }
 });
 $("body").on("click","#edit-submit",function(){
-	alert(45);
+
 		var id=$('#edit-id').val();
 		var name= $('#edit-name').val();
 		var number=$('#edit-pan').val();
