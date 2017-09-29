@@ -57,7 +57,7 @@ if(isset($_POST['sub'])){
     <meta name="description" content="">
     <meta name="author" content="">
  <link rel = "stylesheet" href="css/style.css">
-    <title>LOGIN</title>
+    <title>TDS MANAGEMENT SYSTEM</title>
 	 <?php 
 	include_once  "style.php";
 	?>

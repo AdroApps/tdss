@@ -228,25 +228,22 @@ INSERT INTO `employeetable` (`id`, `employeename`, `pan`, `adhar`, `month1`, `sa
 --
 -- Table structure for table `fileuploads`
 --
-
 CREATE TABLE `fileuploads` (
   `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
-  `recid` int(11) NOT NULL,
   `file` text NOT NULL,
-  `date` datetime NOT NULL
+  `date` datetime NOT NULL,
+  `qid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `fileuploads`
 --
 
-INSERT INTO `fileuploads` (`id`, `userid`, `recid`, `file`, `date`) VALUES
-(1, 92, 92, 'blog.jpg', '2017-09-25 03:00:23'),
-(2, 0, 92, 'banner.jpg', '2017-09-25 03:08:35'),
-(3, 0, 92, '3.jpg', '2017-09-25 03:17:03'),
-(4, 14, 92, '2.jpg', '2017-09-25 03:18:41'),
-(5, 14, 95, '3.jpg', '2017-09-25 03:25:29');
+INSERT INTO `fileuploads` (`id`, `userid`, `file`, `date`, `qid`) VALUES
+(23, 14, 'course-1.jpg', '2017-09-29 05:52:14', 94),
+(24, 2, 'events-slider1.jpg', '2017-09-29 06:06:51', 94);
+
 
 -- --------------------------------------------------------
 

@@ -15,7 +15,7 @@ function active($currect_page){
 <script>
 var url = "http://localhost/tdsgit/tdss/";
 </script>
-<title>client addemployee table</title>
+<title>TDS MANAGEMENT SYSTEM</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel ="stylesheet" href="css/style.css">
 	 <style>
