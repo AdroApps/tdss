@@ -285,7 +285,6 @@ $("body").on("click",".remove-item",function(){
 
 });
  $('#file-upload').submit( function(e) {
-	 alert('yo');
     e.preventDefault();
 
     var data = new FormData(this); // <-- 'this' is your form element

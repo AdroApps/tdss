@@ -119,7 +119,7 @@ $data2 = mysqli_query($conn , $sql2);
 					<table class="table table condensed">
 						<h3 style = "margin-left:15px">Organization TDS Information</h3>
 						<thead>
-							<tr>
+							<tr  align="center">
 								<th>Organization</th>
 								<th>tan</th>
 								<th>year</th>
@@ -133,7 +133,7 @@ $data2 = mysqli_query($conn , $sql2);
 						</thead>
 						<tbody>
 						
-							<tr>
+							<tr  align="center">
 								<td><?php echo "$organization";?></td>
 								<td><?php echo "$tan";?></td>
 								<td><?php echo "$year";?></td>
@@ -315,11 +315,12 @@ $data2 = mysqli_query($conn , $sql2);
 
 		<table class="table table-hover table-condensed">
 				<thead>
-					<tr>
+					<tr align="center">
 						<th>Name</th>
 						<th>View</th>
 						<th>Download</th>					
 						<th>Date</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -342,7 +343,7 @@ $data2 = mysqli_query($conn , $sql2);
 					
 					?>
 					
-					<tr>
+					<tr  align="center">
 					<td><?php echo $roww[2]?></td>
 					
 					<td><a href="<?php echo $url.$roww[2];?>" target="_blank">View</a></td>

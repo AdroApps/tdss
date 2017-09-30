@@ -23,12 +23,12 @@ $data2 = mysqli_query($conn , $sql2);
 
 <!--Client Table-->
 <div class="panel panel-flat newpanel">
-<div class="table-responsive pre-scrollable" style="max-height:506px;">
-	<table class="table table-hover table-condensed newtable">
+<div class="table-responsive pre-scrollable " style="min-height:506px;">
+	<table class="table table-hover table-condensed ">
 		<thead>
 			<tr>
 				
-				<th>Oraganization Name</th>
+				<th>Organization Name</th>
 				<th>Tan</th>
 				<th>Financial Year</th>
 				<th>Quarter</th>
