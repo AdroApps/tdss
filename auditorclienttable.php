@@ -26,7 +26,7 @@ $data2 = mysqli_query($conn , $sql2);
 <div class="table-responsive pre-scrollable " style="min-height:506px;">
 	<table class="table table-hover table-condensed ">
 		<thead>
-			<tr>
+			<tr align="center">
 				
 				<th>Organization Name</th>
 				<th>Tan</th>
@@ -44,7 +44,7 @@ $data2 = mysqli_query($conn , $sql2);
 				
 				while($row = mysqli_fetch_array($data1)){
 					
-					echo "<tr>
+					echo "<tr align='center'>
 					
 					<td><a href='auditorclientdetails.php?clientdetails=$row[0]'>".$row[1]."</a></td>";
 					echo
