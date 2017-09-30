@@ -39,7 +39,7 @@ include_once "header.php";
 	}
 				while($row = mysqli_fetch_array($data1)){
 					
-					echo "<tr id=".$row[0].">
+					echo "<tr align='center' id=".$row[0].">
 					<td width='25.5%' class='edit-pan'>".$row[2]."</td>";
 					echo
 					"<td width='25.5%' class='edit-name'>".$row[3]."</td>";
@@ -66,6 +66,24 @@ include_once "header.php";
 
 	</table>
 </div>
+</div>
+<div class="col-md-12">
+<div class="col-md-6">
+
+	<button type="button"  style="margin-top: -18px;float: right;margin-left: 6px;" class="btnbg btn btn-primary button-loading pull-left" data-toggle="modal" data-target="#importModal">Import Employee</button>
+</div>
+</div>
+<div id="importModal" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+
+    <!-- Modal content-->
+<div class="modal-content">
+
+<form  method="post" name="import" id="file-upload"  enctype="multipart/form-data" style="margin:5%;">
+    	<input type="file" name="file" /><br />
+        <input type="submit" class="btnbg"  name="submit" value="Submit" />
+    </form>
+</div></div>
 </div>
 <!--/Client Table-->
 <!-- Modal -->
@@ -224,4 +242,23 @@ $("body").on("click",".remove-item",function(){
  }
 
 });
+ $('#file-upload').submit( function(e) {
+
+    e.preventDefault();
+
+    var data = new FormData(this); // <-- 'this' is your form element
+    
+		$.ajax({
+        type:'POST',
+        url: url+'import_data.php',        
+		data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+      }).done(function(data){       
+        alert('Data uploaded Successfully.');
+		location.reload();
+    });
+
+	});
 </script>

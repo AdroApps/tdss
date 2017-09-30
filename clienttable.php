@@ -85,7 +85,7 @@ $data2 = mysqli_query($conn , $sql2);
 			</tr>
 		</thead>
 	</table>-->
-<div class="table-responsive pre-scrollable newtable">
+<div class="table-responsive pre-scrollable " style="min-height:506px;" >
      
  <table class="table table-hover table-condensed" id="target">
 	<tr>
@@ -107,7 +107,7 @@ $data2 = mysqli_query($conn , $sql2);
 			
 			<?php	while($row = mysqli_fetch_array($data1)){
 					//print_r($row);
-					echo "<tr id=".$row[0].">
+					echo "<tr align='center' id=".$row[0].">
 					
 					<td width='17%' class='edit-org'><a href='clientdetails.php?clientdetails=$row[0]'>".$row[1]."</a></td>";
 					echo

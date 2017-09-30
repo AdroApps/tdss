@@ -19,7 +19,7 @@ if(isset($_POST['name']))   {
 		$txt= 'not moved'.mysqli_error($conn);
 	}
   }
-  $sql1 = "SELECT * FROM `addemployee`";
+  $sql1 = "SELECT * FROM `addemployee` WHERE userid=".$_SESSION['user_id']." ORDER by id DESC";
   $data1 = mysqli_query($conn, $sql1);
  
 	if($data1)
@@ -58,7 +58,7 @@ if(isset($_POST['name']))   {
 				
 				while($row = mysqli_fetch_array($data1)){
 					
-					echo "<tr id=".$row[0].">
+					echo "<tr align='center' id=".$row[0].">
 					<td class='edit-name'>".$row[2]."</td>";
 					echo
 					"<td class='edit-pan'>".$row[3]."</td>";
@@ -89,8 +89,33 @@ if(isset($_POST['name']))   {
 	</table>
 </div>
 </div>
+<div class="col-md-12">
+<div class="col-md-6">
+
+	<button type="button"  style="margin-top: -18px;float: right;margin-left: 6px;" class="btnbg btn btn-primary button-loading pull-left" data-toggle="modal" data-target="#importModal">Import Employee</button>
+</div>
+<div class="col-md-6">
+  <form action="export.php" method="get" name="export_excel">
+
+					<button type="submit" id="export" name="export" class="btnbg btn btn-primary button-loading" style="margin-top: -18px;float: right;margin-right: 6px;" data-loading-text="Loading...">Export Employee</button>
+			
+		</form>
+</div>
+</div>
 <!--/Client Table-->
 <!-- Modal -->
+<div id="importModal" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+
+    <!-- Modal content-->
+<div class="modal-content">
+
+<form  method="post" name="import" id="file-upload"  enctype="multipart/form-data" style="margin:5%;">
+    	<input type="file" name="file" /><br />
+        <input type="submit" class="btnbg"  name="submit" value="Submit" />
+    </form>
+</div></div>
+</div>
 <div id="myAdminModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -102,15 +127,7 @@ if(isset($_POST['name']))   {
       </div>
       <div class="modal-body">
         <form action="" method="POST">
-			<div class="form-group">
-				<input type="text" class ="form-control" id="panno" name="panno" Placeholder="Enter Pan Number">
-			</div>
-			<div class="form-group">
-				<input type="text" class="form-control" id="name" name="name" Placeholder="Enter Employee FullName">
-			</div>
-			<div class="form-group">
-				<input type="text" class ="form-control" id="adhara" name="adhara" Placeholder="Enter Adhar Number">
-			</div><div class="form-group">
+		<div class="form-group">
 			<select class="form-control" id="orgid" name="orgid">
  <option selected="selected"> Select Client</option>
 <?php $sql_getorg="SELECT id,organization FROM usercreate";
@@ -127,6 +144,15 @@ $res_getorg=mysqli_query($conn, $sql_getorg);
   }
 ?>
 </select>	</div>
+			<div class="form-group">
+				<input type="text" class ="form-control" id="panno" name="panno" Placeholder="Enter Pan Number">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="name" name="name" Placeholder="Enter Employee FullName">
+			</div>
+			<div class="form-group">
+				<input type="text" class ="form-control" id="adhara" name="adhara" Placeholder="Enter Adhar Number">
+			</div>
 		<input type="submit" value="submit" id="edit-submit" class="btn btn-md  btnbg btn-primary">
 	</form>
 	</div>
@@ -192,7 +218,7 @@ return $row['organization'];
 ?>
 <script>
 $( document ).ready(function() {
-	$('#buttonplace').html('<button type="New" class="btn btn-xs btncls  btn-default" data-toggle="modal" data-target="#myAdminModal">Add employee</button>');
+	$('#buttonplace').html('<button type="button" class="btn btn-xs btncls  btn-default" data-toggle="modal" data-target="#myAdminModal">Add employee</button>');
     console.log( "ready!" );
 });
 $("body").on("click","#edit-submit",function(){
@@ -224,7 +250,7 @@ else{
 }
 });
  $("body").on("click",".edit_User",function(){
-	 alert(3);
+	
        $tr = $(this).closest('tr');
 	   var id=$tr.attr('id');
 	   var pan =  $('.edit-pan', $tr).text();
@@ -258,4 +284,23 @@ $("body").on("click",".remove-item",function(){
  }
 
 });
+ $('#file-upload').submit( function(e) {
+	 alert('yo');
+    e.preventDefault();
+
+    var data = new FormData(this); // <-- 'this' is your form element
+    
+		$.ajax({
+        type:'POST',
+        url: url+'import_data.php',        
+		data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+      }).done(function(data){       
+        alert('Data uploaded Successfully.');
+		location.reload();
+    });
+
+	});
 </script>

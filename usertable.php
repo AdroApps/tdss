@@ -1,9 +1,10 @@
 <?php
 include_once "conn.php";
 include_once "header.php";
-
+if($_SESSION['type']=='author')
+$sql2 = "SELECT * FROM `usercreate` WHERE `userid` = '".$_SESSION['author_id']."' ";
+else	
 $sql2 = "SELECT * FROM `usercreate` WHERE `userid` = '".$_SESSION['user_id']."' ";
-
 $data1 = mysqli_query($conn , $sql2);
 
 
@@ -87,7 +88,7 @@ if(isset($_POST['organization']))
 </div>
 <!---modal-->
 <div class="panel panel-flat panelflat newpanel">
-<div class="table-responsive pre-scrollable newtable" style="max-height:506px;">
+<div class="table-responsive pre-scrollable " style="min-height:506px;">
 	<table class="table table-hover table-condensed ">
 		<thead>
 			<tr>
@@ -112,7 +113,7 @@ if(isset($_POST['organization']))
 
 				//echo"<tr>
 				//<td>".$row[0]."</td>";
-				echo "<tr id=".$row[0].">
+				echo "<tr id=".$row[0]." align='center'>
 				<td class='edit-orgname'><a href='auditorclienttable.php?organization=$row[1]'>".$row[1]."</a></td>";
 				echo
 				"<td class='edit-mail'>".$row[2]."</td>";
@@ -153,7 +154,7 @@ if(isset($_POST['organization']))
 </div>
 
 <!----EDIT MODAL--->
-
+<input type="hidden" id="user_role" value="<?php echo $_SESSION['type']; ?>"/>
 <!-- Modal -->
 <div id="myUserModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -208,6 +209,8 @@ if(isset($_POST['organization']))
 
 <script>
 $( document ).ready(function() {
+	var role=$('#user_role').val();
+	if(role!='author')
 	$('#buttonplace').html('<button type="New" class="btn btn-xs btnbg btncls btn-default" data-toggle="modal" data-target="#myModal">New Client</button>');
     console.log( "ready!" );
 });

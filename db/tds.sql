@@ -82,7 +82,7 @@ CREATE TABLE `admincreate` (
   `email` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
   `number` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `admincreate`
@@ -111,7 +111,7 @@ CREATE TABLE `clienttable` (
   `number` int(15) NOT NULL,
   `date` varchar(20) NOT NULL,
   `service` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `clienttable`
@@ -211,7 +211,7 @@ CREATE TABLE `employeetable` (
   `created_date` datetime NOT NULL,
   `userid` int(11) NOT NULL,
   `qid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `employeetable`
@@ -234,7 +234,7 @@ CREATE TABLE `fileuploads` (
   `file` text NOT NULL,
   `date` datetime NOT NULL,
   `qid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `fileuploads`
@@ -258,7 +258,7 @@ CREATE TABLE `notification` (
   `status` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `notification`
@@ -285,7 +285,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `user`
@@ -314,7 +314,7 @@ CREATE TABLE `usercreate` (
   `service` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `userid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `usercreate`

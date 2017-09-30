@@ -25,7 +25,7 @@
 .navbar-default .navbar-nav > .active > a:after{
   margin-bottom : 6px;
 }
-.newtable{min-height: 410px!important;overflow-y: scroll;overflow-x: hidden!important;}
+.newtable{min-height: 460px!important;overflow-y: scroll;overflow-x: hidden!important;}
 .noscroll{overflow-x: hidden!important;}
 .newpanel{margin: 4px 2%;}
 .newpanel h3{padding-top:1%}
@@ -60,7 +60,7 @@ display: none!important;
 }
 #user_data th{
 padding-left: 10px!important;
-    padding-right: 0px!important;    width: 10%!important;
+    padding-right: 0px!important;    width: 9%!important;
 }
 .sorting, .sorting_asc, .sorting_desc {
     background : none;
@@ -91,4 +91,9 @@ table.dataTable thead .sorting_desc:after {
     font-weight: bold;
     margin-left: 4%;
     margin-top: 5%;
+}
+th{text-transform:uppercase;color: #273246!important;padding:12px 8px!important;text-align:center!important;}
+#user_data tr{text-align:center!important;padding:12px 8px!important;}
+.newt{
+padding:0px!important;
 }

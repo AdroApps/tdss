@@ -10,6 +10,9 @@ if(isset($_POST['sub'])){
     $client_result = mysqli_query($conn , $client_sql);
 	$admin_sql = "SELECT * FROM `admincreate` WHERE email = '".$mail."' AND password = '".$pwd."'";
     $admin_result = mysqli_query($conn , $admin_sql);
+	$internal_sql="SELECT * FROM `internal_users` WHERE `email_id` = '".$mail."' AND `password` = '".$pwd."'";
+
+	$internal_result=mysqli_query($conn , $internal_sql);
     //echo $sql;
     if(mysqli_num_rows($client_result) != 0) {
 		  while($client_row=mysqli_fetch_assoc($client_result)) {
@@ -37,6 +40,23 @@ if(isset($_POST['sub'])){
 			header('Location:usertable.php');
 			$_SESSION['e'] = $_POST['mail'];
 				$_SESSION['type']='admin';
+
+		}
+    
+      }
+	  else if(mysqli_num_rows($internal_result) != 0){
+		while($author_row=mysqli_fetch_assoc($internal_result)) {
+			$email=$author_row['email_id'];
+			$password=$author_row['password'];
+			$_SESSION['user_id'] = $author_row['id'];
+			$_SESSION['author_id'] = $author_row['auditor_id'];
+			
+		}
+		if($email == $mail && $password == $pwd) {
+			
+			header('Location:usertable.php');
+			$_SESSION['e'] = $_POST['mail'];
+				$_SESSION['type']='author';
 
 		}
     

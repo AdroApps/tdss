@@ -107,6 +107,16 @@ var url = "http://localhost/tdsgit/tdss/";
 				<li class="<?php active('usertable.php');?>"><a href="usertable.php"><i class="icon-puzzle4 position-left"></i>Clients</a></li>
 				<li class="<?php active('adminaddemployee.php');?>"><a href="adminaddemployee.php"><i class="icon-puzzle4 position-left"></i>Employees</a></li>
 				
+				<li class="<?php active('internal_user.php');?>"><a href="internal_user.php"><i class="icon-puzzle4 position-left"></i>INTERNAL USERS</a></li>
+			</ul>
+		</div>
+<?php } else if($_SESSION['type']=='author'){?>		
+		
+		<!--admin menu-->
+		<div class="navbar-collapse collapse" id="navbar-second-toggle">
+			<ul class="nav navbar-nav navbar-nav-material" style="margin-left: -196px";>
+				<!--li class=""><a href="usercreate.php"><i class="icon-puzzle4 position-left"></i>AddUser</a></li-->
+				<li class="<?php active('usertable.php');?>"><a href="usertable.php"><i class="icon-puzzle4 position-left"></i>Clients</a></li>
 			</ul>
 		</div>
 <?php }?>

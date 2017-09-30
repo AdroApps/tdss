@@ -81,7 +81,7 @@ $data4 = mysqli_query($conn, $sql4);
 			<table class="table table-hover table-condensed" >
 					<h3 style = "margin-left:15px">Organization TDS Information</h3>
 						<thead>
-							<tr>
+							<tr align="center">
 								<th>Organization</th>
 								<th>tan</th>
 								<th>year</th>
@@ -94,7 +94,7 @@ $data4 = mysqli_query($conn, $sql4);
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr align="center">
 								<td><?php echo "$organization";?></td>
 								<td><?php echo "$tan";?></td>
 								<td><?php echo "$year";?></td>
@@ -115,24 +115,50 @@ $data4 = mysqli_query($conn, $sql4);
 				<h3 style = "margin-left:15px">Quarter - <?php echo "$quarter";?></h3>
 				<tr>
 					<th><?php echo "$month1";?></th>
-					<td>Total Tds amount : <?php echo "$tdsamount1tot";?></td>
+					<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+					<td>Total TDS amount : <?php echo "$tdsamount1tot";?></td>
 				</tr>
 				<tr>
-					<th><?php echo "$month2";?></th>
-					<td>Total Tds amount  :  <?php echo "$tdsamount2tot";?></td>
+					<th><?php echo "$month2";?></th><td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+					<td>Total TDS amount  :  <?php echo "$tdsamount2tot";?></td>
 				</tr>
 				
 				<tr>
-					<th><?php echo "$month3";?></th>
-					<td>Total Tds amount  :  <?php echo "$tdsamount3tot";?></td>
+					<th><?php echo "$month3";?></th><td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+					<td>Total TDS amount  :  <?php echo "$tdsamount3tot";?></td>
 				</tr>
 				<tr>
-					<th></th>
+					<th></th><td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 					<td>Service Charges : <?php echo "$service";?></td>
 				</tr>
 				<tr>
-					<th></th>
-					<td>Grand Total : <?php echo "$totaltdsamount";?></td>
+					<th></th><td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+					<td>Grand Total : <?php echo "<b>$totaltdsamount</b>";?></td>
 				</tr>
 			
 			</table>
@@ -151,18 +177,18 @@ $data4 = mysqli_query($conn, $sql4);
      
 <table class="table table-hover table-condensed" id="user_data">
  <thead>
-             <tr>
+             <tr align="center">
                 <th>Employee Fullname</th>
 				<th width="5%">Pan Number</th>
 				<th width="5%">Month 1</th>
-				<th width="5%">salary</th>
-				<th width="5%">TDS amount</th>
+				<th width="4%">salary</th>
+				<th width="6%">TDS amount</th>
 				<th width="5%">Month 2</th>
-				<th width="5%">salary</th>
-				<th width="5%">TDS amount</th>
+				<th width="4%">salary</th>
+				<th width="6%">TDS amount</th>
 				<th width="5%">Month 3</th>
-				<th width="5%">salary</th>
-				<th width="5%">TDS amount</th>		
+				<th width="4%">salary</th>
+				<th width="6%">TDS amount</th>		
                 <th>Delete</th>
              </tr>
      </thead>
@@ -199,23 +225,24 @@ $object = json_decode(json_encode($array), FALSE);
                                 <input type="file" name="file_url" >
                             </a>
                             &nbsp;<span class="label label-info" id="img"></span>
-                            <input type="submit" id="file-upload"  class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
+                            <input type="submit"   class="btn btn-sm btn-default btnbg" style=" margin-top: -30px;margin-left: 11px" name="filesubmit" value="Submit">
              </div>
             				
 		</form>
 	<div class="panel panel-flat panelflat newpanel">
-					
-	<table class="table table-hover table-condensed">
+					<!--
+	<table class="table table-hover table-condensed newt">
 	
 				<thead>
-					<tr>
-						<th width="25%">Name</th>
-						<th width="25%">View</th>
-						<th width="25%">Download</th>
-						<th width="25%">Date</th>
+					<tr align="center">
+						<th>Name</th>
+						<th>View</th>
+						<th >Download</th>
+						<th >Date</th>
+						<th >Delete</th>
 					</tr>
 				</thead>
-			</table>
+			</table>-->
 			<div class="table-responsive pre-scrollable noscroll">
      
  <table class="table table-hover table-condensed">
@@ -240,16 +267,22 @@ $object = json_decode(json_encode($array), FALSE);
 				while($roww = mysqli_fetch_array($data4)){
 				 
 				 ?>
+				 	<tr align="center">
+						<th>Name</th>
+						<th>View</th>
+						<th >Download</th>
+						<th >Date</th>
+						<th >Delete</th>
+					</tr>
+				 <tr align="center" >
+				 <td ><?php echo $roww[2]?></td>
 				 
-				 <tr >
-				 <td width="25.5%"><?php echo $roww[2]?></td>
+				 <td ><a href="<?php echo $url.$roww[2];?>" target="_blank">View</a></td>
 				 
-				 <td width="25.5%"><a href="<?php echo $url.$roww[2];?>" target="_blank">View</a></td>
-				 
-				 <td width="25.5%"><a href="<?php echo $url.$roww[2];?>" download>Download</a></td>
+				 <td ><a href="<?php echo $url.$roww[2];?>" download>Download</a></td>
 				 <?php echo
 				 "<td>".$roww[3]."</td>";
-				 echo "<td width='10%' >
+				 echo "<td  >
 						<a class='btn btn-xs btnbg remove-image' id='$roww[0],$roww[2]' >
 							<span class='glyphicon glyphicon-trash'></span>
 						</a>

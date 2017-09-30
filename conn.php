@@ -21,7 +21,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
     }*/
 if (!isset($_SESSION['created'])) {
     $_SESSION['created'] = time();
-} else if (time() - $_SESSION['created'] > 1800) {
+} else if (time() - $_SESSION['created'] > 5400) {
     // session started more than 30 minutes ago
     //session_regenerate_id(true);    // change session ID for the current session and invalidate old session ID
     session_destroy();

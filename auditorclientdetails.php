@@ -132,6 +132,7 @@ $data2 = mysqli_query($conn , $sql2);
 							</tr>
 						</thead>
 						<tbody>
+						
 							<tr>
 								<td><?php echo "$organization";?></td>
 								<td><?php echo "$tan";?></td>
@@ -169,24 +170,54 @@ $data2 = mysqli_query($conn , $sql2);
 
 							<tr>
 								<th><?php echo "$month1";?></th>
-								<td>Total Tds amount : <?php echo "$tdsamount1tot";?></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>Total TDS amount : <?php echo "$tdsamount1tot";?></td>
 							</tr>
 							<tr>
 								<th><?php echo "$month2";?></th>
-								<td>Total Tds amount  :  <?php echo "$tdsamount2tot";?></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>Total TDS amount  :  <?php echo "$tdsamount2tot";?></td>
 							</tr>
 							
 							<tr>
 								<th><?php echo "$month3";?></th>
-								<td>Total Tds amount  :  <?php echo "$tdsamount3tot";?></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>Total TDS amount  :  <?php echo "$tdsamount3tot";?></td>
 							</tr>
 							<tr>
 								<th></th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 								<td>Service Charges : <?php echo "$service";?></td>
 							</tr>
 							<tr>
 								<th></th>
-								<td>Grand Total : <?php echo "$totaltdsamount";?></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><b>Grand Total</b> : <?php echo "<b>$totaltdsamount</b>";?></td>
 							</tr>
 						
 						</table>
