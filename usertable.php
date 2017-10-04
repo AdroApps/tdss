@@ -51,36 +51,38 @@ if(isset($_POST['organization']))
       </div>
       <div class="modal-body">
         <form action ="" method="POST">
-						<div class="form-group">
-						<input type = "text" class="form-control" id ="orgname" name="organization" placeholder = "Enter Organization Name">
+						<div class="form-group col-md-6">
+						<input type = "text" class="form-control" id ="orgname" name="organization" placeholder = "Enter Organization Name" required>
 						</div>
-						<div class="form-group">
-						<input type = "email" class="form-control" id ="mail" name="mail" placeholder = "Enter Email">
+						<div class="form-group col-md-6">
+						<input type = "email" class="form-control" id ="mail" name="mail" placeholder = "Enter Email" required>
 						</div>
-						<div class="form-group">
-						<input type = "password" class="form-control" id ="password" name="password" placeholder = "Enter Password">
+						<div class="form-group col-md-6">
+						<input type = "password" class="form-control" id ="password" name="password" placeholder = "Enter Password" required>
 						</div>
-						<div class="form-group">
-						<input type="text" class="form-control" id="pname" name="personname" Placeholder="Enter Authorised Person Name">
+						<div class="form-group col-md-6">
+						<input type="text" class="form-control" id="pname" name="personname" Placeholder="Enter Authorised Person Name" required>
 					    </div>
-						<div class="form-group">
-						<input type = "number" class="form-control" id ="number" name="phonenumber" placeholder = "Enter Phonenumber">
+						<div class="form-group col-md-6">
+						<input type = "text" maxlength="10" class="form-control" id ="number" name="phonenumber" placeholder = "Enter Phonenumber" required>
 						</div>
-						<div class="form-group">
-						<input type="text" class ="form-control" id="tan" name="tan" Placeholder="Enter Tan">
+						<div class="form-group col-md-6">
+						<input type="text" class ="form-control" id="tan" name="tan" Placeholder="Enter Tan" required>
 						</div>
-						<div class="form-group">
-						<input type="text" class ="form-control" id="city" name="city" Placeholder="Enter City">
+						<div class="form-group col-md-6">
+						<input type="text" class ="form-control" id="city" name="city" Placeholder="Enter City" required>
 						</div>
-						<div class="form-group">
-						<input type="text" class ="form-control" id="area" name="area" Placeholder="Enter Area">
+						<div class="form-group col-md-6">
+						<input type="text" class ="form-control" id="area" name="area" Placeholder="Enter Area" required>
 						</div>
-						<div class="form-group">
-						<input type="text" class="form-control" id="service" name="service" Placeholder="Enter Service Charges">
+						<div class="form-group col-md-6">
+						<input type="number" class="form-control" id="service" name="service" Placeholder="Enter Service Charges" required>
 					    </div>
+						 <div class="clearfix"></div>
+        <div class="col-md-6">
 						<input type="submit" name="submit" value="submit" class="btn btn-md btnbg btn-success">
-
-					</form>
+</div>
+					</form>   <div class="clearfix"></div>
 </div>
 </div>
 	<!--/modal content-->
